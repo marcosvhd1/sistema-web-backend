@@ -27,12 +27,12 @@ export default class EmpresasController {
 
     const body = request.body();
 
-    const empresa = await Empresa.find(params.id);
+    const data = await Empresa.find(params.id);
 
-    if (empresa != null) {
-      empresa.cnpjcpf = body.cnpjcpf;
+    if (data != null) {
+      data.cnpjcpf = body.cnpjcpf;
 
-      await empresa.save();
+      await data.save();
 
       return true;
     }
@@ -42,10 +42,10 @@ export default class EmpresasController {
 
   public async deleteEmpresa({ params }: HttpContextContract) {
 
-    const empresa = await Empresa.find(params.id);
+    const data = await Empresa.find(params.id);
 
-    if (empresa != null) {
-      await empresa.delete();
+    if (data != null) {
+      await data.delete();
 
       return true;
     }

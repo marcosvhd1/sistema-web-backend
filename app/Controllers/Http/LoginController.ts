@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+
 import Database from '@ioc:Adonis/Lucid/Database';
 import Empresa from 'App/Models/Empresa';
 
@@ -19,22 +20,14 @@ export default class LoginController {
         expiresIn: '1 day',
       });
 
-      if (user.tipo_admin === 1) {
-        const data = {
-          autenticado: true,
-          admin: 1,
-          token: token,
-        };
+      const data = {
+        autenticado: true,
+        admin: user.tipo_admin === 1 ? 1 : 0,
+        token: token,
+      };
 
-        return data;
-      } else {
-        const data = {
-          autenticado: true,
-          admin: 0,
-          token: token,
-        };
-        return data;
-      }
+      return data;
+
     } catch (e: any) {
       return response.unauthorized('Credenciais inválidas');
     }

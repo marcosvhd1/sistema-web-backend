@@ -27,14 +27,14 @@ export default class EmissorUsuariosController {
 
     const body = request.body();
 
-    const emissorUsuario = await EmissorUsuario.find(params.id);
+    const data = await EmissorUsuario.find(params.id);
 
-    if (emissorUsuario != null) {
+    if (data != null) {
 
-      emissorUsuario.id_emissor = body.id_emissor;
-      emissorUsuario.id_usuario = body.id_usuario;
+      data.id_emissor = body.id_emissor;
+      data.id_usuario = body.id_usuario;
 
-      await emissorUsuario.save();
+      await data.save();
 
       return true;
     }
@@ -44,10 +44,10 @@ export default class EmissorUsuariosController {
 
   public async deleteEmissorUsuario({ params }: HttpContextContract) {
 
-    const emissorUsuario = await EmissorUsuario.find(params.id);
+    const data = await EmissorUsuario.find(params.id);
 
-    if (emissorUsuario != null) {
-      await emissorUsuario.delete();
+    if (data != null) {
+      await data.delete();
 
       return true;
     }

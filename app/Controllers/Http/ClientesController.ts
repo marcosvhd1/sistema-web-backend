@@ -10,11 +10,11 @@ export default class ClientesController {
     const page = request.input('page', 1);
     const limit = request.input('limit');
 
-    const clientes = await Database.from('clientes').orderBy('id').paginate(page, limit);
+    const data = await Database.from('clientes').orderBy('id').paginate(page, limit);
 
-    response.header('qtd', clientes.total);
+    response.header('qtd', data.total);
 
-    return clientes.all();
+    return data.all();
   }
 
   public async getClienteById({ params }: HttpContextContract) {
@@ -34,42 +34,42 @@ export default class ClientesController {
   public async updateCliente({ request, params }: HttpContextContract) {
     const body = request.body();
 
-    const cliente = await Cliente.find(params.id);
+    const data = await Cliente.find(params.id);
 
-    if (cliente != null) {
-      cliente.id_emissor = body.id_emissor;
-      cliente.tipo = body.tipo;
-      cliente.categoria = body.categoria;
-      cliente.razao = body.razao;
-      cliente.fantasia = body.fantasia;
-      cliente.cnpjcpf = body.cnpjcpf;
-      cliente.rg = body.rg;
-      cliente.ie = body.ie;
-      cliente.im = body.im;
-      cliente.suframa = body.suframa;
-      cliente.tipo_contribuinte = body.tipo_contribuinte;
-      cliente.logradouro = body.logradouro;
-      cliente.numero = body.numero;
-      cliente.bairro = body.bairro;
-      cliente.cep = body.cep;
-      cliente.uf = body.uf;
-      cliente.cidade = body.cidade;
-      cliente.id_cidade = body.id_cidade;
-      cliente.complemento = body.complemento;
-      cliente.observacao = body.observacao;
-      cliente.tipo_telefone1 = body.tipo_telefone1;
-      cliente.tipo_telefone2 = body.tipo_telefone2;
-      cliente.tipo_telefone3 = body.tipo_telefone3;
-      cliente.telefone1 = body.telefone1;
-      cliente.telefone2 = body.telefone2;
-      cliente.telefone3 = body.telefone3;
-      cliente.pais = body.pais;
-      cliente.cod_pais = body.cod_pais;
-      cliente.email1 = body.email1;
-      cliente.email2 = body.email2;
-      cliente.site = body.site;
+    if (data != null) {
+      data.id_emissor = body.id_emissor;
+      data.tipo = body.tipo;
+      data.categoria = body.categoria;
+      data.razao = body.razao;
+      data.fantasia = body.fantasia;
+      data.cnpjcpf = body.cnpjcpf;
+      data.rg = body.rg;
+      data.ie = body.ie;
+      data.im = body.im;
+      data.suframa = body.suframa;
+      data.tipo_contribuinte = body.tipo_contribuinte;
+      data.logradouro = body.logradouro;
+      data.numero = body.numero;
+      data.bairro = body.bairro;
+      data.cep = body.cep;
+      data.uf = body.uf;
+      data.cidade = body.cidade;
+      data.id_cidade = body.id_cidade;
+      data.complemento = body.complemento;
+      data.observacao = body.observacao;
+      data.tipo_telefone1 = body.tipo_telefone1;
+      data.tipo_telefone2 = body.tipo_telefone2;
+      data.tipo_telefone3 = body.tipo_telefone3;
+      data.telefone1 = body.telefone1;
+      data.telefone2 = body.telefone2;
+      data.telefone3 = body.telefone3;
+      data.pais = body.pais;
+      data.cod_pais = body.cod_pais;
+      data.email1 = body.email1;
+      data.email2 = body.email2;
+      data.site = body.site;
 
-      await cliente.save();
+      await data.save();
 
       return true;
     }
@@ -79,14 +79,33 @@ export default class ClientesController {
 
   public async deleteCliente({ params }: HttpContextContract) {
 
-    const cliente = await Cliente.find(params.id);
+    const data = await Cliente.find(params.id);
 
-    if (cliente != null) {
-      await cliente.delete();
+    if (data != null) {
+      await data.delete();
 
       return true;
     }
 
     return false;
+  }
+
+  public async maxCod() {
+
+    const maxCod = await Database.rawQuery('select max(cod) from clientes');
+
+    return maxCod;
+  }
+
+  public async searchFilter({ request, response }: HttpContextContract) {
+    const { filter, description } = request.qs();
+
+    const page = request.input('page', 1);
+    const limit = request.input('limit');
+
+    const cliente = await Database.from('clientes').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).orderBy('id').paginate(page, limit);
+    response.header('qtd', cliente.total);
+
+    return cliente.all();
   }
 }

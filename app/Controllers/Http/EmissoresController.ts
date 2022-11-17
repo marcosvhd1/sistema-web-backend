@@ -27,15 +27,15 @@ export default class EmissoresController {
 
     const body = request.body();
 
-    const emissor = await Emissor.find(params.id);
+    const data = await Emissor.find(params.id);
 
-    if (emissor != null) {
+    if (data != null) {
 
-      emissor.id_empresa = body.id_empresa;
-      emissor.razao = body.razao;
-      emissor.cnpjcpf = body.cnpjcpf;
+      data.id_empresa = body.id_empresa;
+      data.razao = body.razao;
+      data.cnpjcpf = body.cnpjcpf;
 
-      await emissor.save();
+      await data.save();
 
       return true;
     }
@@ -45,10 +45,10 @@ export default class EmissoresController {
 
   public async deleteEmissor({ params }: HttpContextContract) {
 
-    const emissor = await Emissor.find(params.id);
+    const data = await Emissor.find(params.id);
 
-    if (emissor != null) {
-      await emissor.delete();
+    if (data != null) {
+      await data.delete();
 
       return true;
     }

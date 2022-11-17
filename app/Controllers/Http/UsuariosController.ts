@@ -27,16 +27,16 @@ export default class UsuariosController {
 
     const body = request.body();
 
-    const usuario = await Usuario.find(params.id);
+    const data = await Usuario.find(params.id);
 
-    if (usuario != null) {
-      usuario.id_empresa = body.id_empresa;
-      usuario.email = body.email;
-      usuario.password = body.password;
-      usuario.tipo_admin = body.tipo_admin;
-      usuario.rememberMeToken = body.rememberMeToken;
+    if (data != null) {
+      data.id_empresa = body.id_empresa;
+      data.email = body.email;
+      data.password = body.password;
+      data.tipo_admin = body.tipo_admin;
+      data.rememberMeToken = body.rememberMeToken;
 
-      await usuario.save();
+      await data.save();
 
       return true;
     }
@@ -46,10 +46,10 @@ export default class UsuariosController {
 
   public async deleteUsuario({ params }: HttpContextContract) {
 
-    const usuario = await Usuario.find(params.id);
+    const data = await Usuario.find(params.id);
 
-    if (usuario != null) {
-      await usuario.delete();
+    if (data != null) {
+      await data.delete();
 
       return true;
     }
