@@ -1,3 +1,4 @@
+import { Exception } from '@adonisjs/core/build/standalone';
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import Database from '@ioc:Adonis/Lucid/Database';
 
@@ -24,11 +25,15 @@ export default class ClientesController {
 
   public async setCliente({ request, response }: HttpContextContract) {
 
-    await Cliente.create(request.body());
+    try {
+      await Cliente.create(request.body());
 
-    response.status(201);
+      response.status(201);
 
-    return true;
+    } catch (error: any) {
+      throw new Exception(error.getMessage());
+    }
+
   }
 
   public async updateCliente({ request, params }: HttpContextContract) {
