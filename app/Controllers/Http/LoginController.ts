@@ -4,6 +4,7 @@ import Database from '@ioc:Adonis/Lucid/Database';
 import Empresa from 'App/Models/Empresa';
 
 export default class LoginController {
+
   public async auth({ auth, request, response }: HttpContextContract) {
     const cnpjcpf = request.input('cnpjcpf');
     const emailRequest = request.input('email');

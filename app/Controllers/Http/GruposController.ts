@@ -1,3 +1,4 @@
+import { Exception } from '@adonisjs/core/build/standalone';
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import Database from '@ioc:Adonis/Lucid/Database';
 
@@ -10,55 +11,70 @@ export default class GruposController {
     const page = request.input('page', 1);
     const limit = request.input('limit');
 
-    const data = await Database.from('grupos').orderBy('id').paginate(page, limit);
+    try {
+      const data = await Database.from('grupos').orderBy('id').paginate(page, limit);
 
-    response.header('qtd', data.total);
+      response.header('qtd', data.total);
 
-    return data.all();
+      return data.all();
+
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async getGrupoById({ params }: HttpContextContract) {
 
-    return await Grupo.find(params.id) ?? false;
+    try {
+      return await Grupo.find(params.id);
+
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async setGrupo({ request, response }: HttpContextContract) {
 
-    await Grupo.create(request.body());
+    try {
+      await Grupo.create(request.body());
 
-    response.status(201);
+      response.status(201);
 
-    return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async updateGrupo({ request, params }: HttpContextContract) {
     const body = request.body();
 
-    const data = await Grupo.find(params.id);
+    try {
+      const data = await Grupo.find(params.id);
 
-    if (data != null) {
-      data.id_emissor = body.id_emissor;
-      data.descricao = body.descricao;
-      data.tipo = body.tipo;
+      if (data != null) {
+        data.id_emissor = body.id_emissor;
+        data.descricao = body.descricao;
+        data.tipo = body.tipo;
 
-      await data.save();
+        await data.save();
+      }
 
-      return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
     }
-
-    return false;
   }
 
   public async deleteGrupo({ params }: HttpContextContract) {
 
-    const data = await Grupo.find(params.id);
+    try {
+      const data = await Grupo.find(params.id);
 
-    if (data != null) {
-      await data.delete();
+      if (data != null) {
+        await data.delete();
+      }
 
-      return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
     }
-
-    return false;
   }
 }

@@ -1,3 +1,4 @@
+import { Exception } from '@adonisjs/core/build/standalone';
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
 import Cidade from 'App/Models/Cidade';
@@ -6,57 +7,77 @@ export default class CidadesController {
 
   public async getCidades() {
 
-    return await Cidade.all();
+    try {
+      return await Cidade.all();
+
+    } catch (error: any) {
+      throw new Exception(error.getMessage());
+    }
+
   }
 
   public async getCidadeById({ params }: HttpContextContract) {
 
-    return await Cidade.find(params.id) ?? false;
+    try {
+      return await Cidade.find(params.id);
+
+    } catch (error: any) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async getCidadesByUF({ params }: HttpContextContract) {
 
-    return await Cidade.find(params.uf) ?? false;
+    try {
+      return await Cidade.find(params.uf);
+
+    } catch (error: any) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async setCidade({ request, response }: HttpContextContract) {
 
-    await Cidade.create(request.body());
+    try {
+      await Cidade.create(request.body());
 
-    response.status(201);
+      response.status(201);
 
-    return true;
+    } catch (error: any) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async updateCidade({ request, params }: HttpContextContract) {
 
     const body = request.body();
 
-    const data = await Cidade.find(params.id);
+    try {
+      const data = await Cidade.find(params.id);
 
-    if (data != null) {
-      data.nome = body.nome;
-      data.uf = body.uf;
+      if (data != null) {
+        data.nome = body.nome;
+        data.uf = body.uf;
 
-      await data.save();
+        await data.save();
+      }
 
-      return true;
+    } catch (error: any) {
+      throw new Exception(error.getMessage());
     }
-
-    return false;
   }
 
   public async deleteCidade({ params }: HttpContextContract) {
 
-    const data = await Cidade.find(params.id);
+    try {
+      const data = await Cidade.find(params.id);
 
-    if (data != null) {
-      await data.delete();
+      if (data != null) {
+        await data.delete();
+      }
 
-      return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
     }
-
-    return false;
   }
-
 }

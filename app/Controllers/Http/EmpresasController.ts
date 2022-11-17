@@ -1,3 +1,4 @@
+import { Exception } from '@adonisjs/core/build/standalone';
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
 import Empresa from 'App/Models/Empresa';
@@ -6,51 +7,65 @@ export default class EmpresasController {
 
   public async getEmpresas() {
 
-    return await Empresa.all();
+    try {
+      return await Empresa.all();
+
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async getEmpresaById({ params }: HttpContextContract) {
 
-    return await Empresa.find(params.id) ?? false;
+    try {
+      return await Empresa.find(params.id);
+
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async setEmpresa({ request, response }: HttpContextContract) {
 
-    await Empresa.create(request.body());
+    try {
+      await Empresa.create(request.body());
 
-    response.status(201);
+      response.status(201);
 
-    return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async updateEmpresa({ request, params }: HttpContextContract) {
 
     const body = request.body();
 
-    const data = await Empresa.find(params.id);
+    try {
+      const data = await Empresa.find(params.id);
 
-    if (data != null) {
-      data.cnpjcpf = body.cnpjcpf;
+      if (data != null) {
+        data.cnpjcpf = body.cnpjcpf;
 
-      await data.save();
+        await data.save();
+      }
 
-      return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
     }
-
-    return false;
   }
 
   public async deleteEmpresa({ params }: HttpContextContract) {
 
-    const data = await Empresa.find(params.id);
+    try {
+      const data = await Empresa.find(params.id);
 
-    if (data != null) {
-      await data.delete();
+      if (data != null) {
+        await data.delete();
+      }
 
-      return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
     }
-
-    return false;
   }
-
 }
