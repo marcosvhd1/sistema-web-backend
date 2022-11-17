@@ -1,3 +1,4 @@
+import { Exception } from '@adonisjs/core/build/standalone';
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
 import EmissorUsuario from 'App/Models/EmissorUsuario';
@@ -6,52 +7,67 @@ export default class EmissorUsuariosController {
 
   public async getEmissorUsuarios() {
 
-    return await EmissorUsuario.all();
+    try {
+      return await EmissorUsuario.all();
+
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async getEmissorUsuarioById({ params }: HttpContextContract) {
 
-    return await EmissorUsuario.find(params.id) ?? false;
+    try {
+      return await EmissorUsuario.find(params.id);
+
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async setEmissorUsuario({ request, response }: HttpContextContract) {
 
-    await EmissorUsuario.create(request.body());
+    try {
+      await EmissorUsuario.create(request.body());
 
-    response.status(201);
+      response.status(201);
 
-    return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async updateEmissorUsuario({ request, params }: HttpContextContract) {
 
     const body = request.body();
 
-    const data = await EmissorUsuario.find(params.id);
+    try {
+      const data = await EmissorUsuario.find(params.id);
 
-    if (data != null) {
+      if (data != null) {
 
-      data.id_emissor = body.id_emissor;
-      data.id_usuario = body.id_usuario;
+        data.id_emissor = body.id_emissor;
+        data.id_usuario = body.id_usuario;
 
-      await data.save();
+        await data.save();
+      }
 
-      return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
     }
-
-    return false;
   }
 
   public async deleteEmissorUsuario({ params }: HttpContextContract) {
 
-    const data = await EmissorUsuario.find(params.id);
+    try {
+      const data = await EmissorUsuario.find(params.id);
 
-    if (data != null) {
-      await data.delete();
+      if (data != null) {
+        await data.delete();
+      }
 
-      return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
     }
-
-    return false;
   }
 }

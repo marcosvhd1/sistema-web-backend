@@ -1,3 +1,4 @@
+import { Exception } from '@adonisjs/core/build/standalone';
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 
 import Emissor from 'App/Models/Emissor';
@@ -6,53 +7,67 @@ export default class EmissoresController {
 
   public async getEmissores() {
 
-    return await Emissor.all();
+    try {
+      return await Emissor.all();
+
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async getEmissorById({ params }: HttpContextContract) {
 
-    return await Emissor.find(params.id) ?? false;
+    try {
+      return await Emissor.find(params.id);
+
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async setEmissor({ request, response }: HttpContextContract) {
 
-    await Emissor.create(request.body());
+    try {
+      await Emissor.create(request.body());
 
-    response.status(201);
+      response.status(201);
 
-    return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async updateEmissor({ request, params }: HttpContextContract) {
 
     const body = request.body();
 
-    const data = await Emissor.find(params.id);
+    try {
+      const data = await Emissor.find(params.id);
 
-    if (data != null) {
+      if (data != null) {
+        data.id_empresa = body.id_empresa;
+        data.razao = body.razao;
+        data.cnpjcpf = body.cnpjcpf;
 
-      data.id_empresa = body.id_empresa;
-      data.razao = body.razao;
-      data.cnpjcpf = body.cnpjcpf;
+        await data.save();
+      }
 
-      await data.save();
-
-      return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
     }
-
-    return false;
   }
 
   public async deleteEmissor({ params }: HttpContextContract) {
 
-    const data = await Emissor.find(params.id);
+    try {
+      const data = await Emissor.find(params.id);
 
-    if (data != null) {
-      await data.delete();
+      if (data != null) {
+        await data.delete();
+      }
 
-      return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
     }
-
-    return false;
   }
 }

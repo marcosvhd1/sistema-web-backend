@@ -1,3 +1,4 @@
+import { Exception } from '@adonisjs/core/build/standalone';
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import Database from '@ioc:Adonis/Lucid/Database';
 
@@ -10,71 +11,92 @@ export default class ServicosController {
     const page = request.input('page', 1);
     const limit = request.input('limit');
 
-    const data = await Database.from('servicos').orderBy('id').paginate(page, limit);
+    try {
+      const data = await Database.from('servicos').orderBy('id').paginate(page, limit);
 
-    response.header('qtd', data.total);
+      response.header('qtd', data.total);
 
-    return data.all();
+      return data.all();
+
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async getServicoById({ params }: HttpContextContract) {
 
-    return await Servico.find(params.id) ?? false;
+    try {
+      return await Servico.find(params.id);
+
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
+
   }
 
   public async setServico({ request, response }: HttpContextContract) {
 
-    await Servico.create(request.body());
+    try {
+      await Servico.create(request.body());
 
-    response.status(201);
+      response.status(201);
 
-    return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async updateServico({ request, params }: HttpContextContract) {
     const body = request.body();
 
-    const data = await Servico.find(params.id);
+    try {
+      const data = await Servico.find(params.id);
 
-    if (data != null) {
-      data.id_emissor = body.id_emissor;
-      data.nserv = body.nserv;
-      data.descricao = body.descricao;
-      data.un = body.un;
-      data.preco = body.preco;
-      data.anotacoes = body.anotacoes;
-      data.base_iss = body.base_iss;
-      data.aliquota_iss = body.aliquota_iss;
-      data.status = body.status;
-      data.item_lista = body.item_lista;
-      data.ncm = body.ncm;
+      if (data != null) {
+        data.id_emissor = body.id_emissor;
+        data.nserv = body.nserv;
+        data.descricao = body.descricao;
+        data.un = body.un;
+        data.preco = body.preco;
+        data.anotacoes = body.anotacoes;
+        data.base_iss = body.base_iss;
+        data.aliquota_iss = body.aliquota_iss;
+        data.status = body.status;
+        data.item_lista = body.item_lista;
+        data.ncm = body.ncm;
 
-      await data.save();
+        await data.save();
+      }
 
-      return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
     }
-
-    return false;
   }
 
   public async deleteServico({ params }: HttpContextContract) {
 
-    const data = await Servico.find(params.id);
+    try {
+      const data = await Servico.find(params.id);
 
-    if (data != null) {
-      await data.delete();
+      if (data != null) {
+        await data.delete();
+      }
 
-      return true;
+    } catch (error) {
+      throw new Exception(error.getMessage());
     }
-
-    return false;
   }
 
   public async maxNServ() {
 
-    const maxNProd = await Database.rawQuery('select max(nserv) from servicos');
+    try {
+      const maxNProd = await Database.rawQuery('select max(nserv) from servicos');
 
-    return maxNProd;
+      return maxNProd;
+
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 
   public async searchFilter({ request, response }: HttpContextContract) {
@@ -83,9 +105,14 @@ export default class ServicosController {
     const page = request.input('page', 1);
     const limit = request.input('limit');
 
-    const data = await Database.from('servicos').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).orderBy('id').paginate(page, limit);
-    response.header('qtd', data.total);
+    try {
+      const data = await Database.from('servicos').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).orderBy('id').paginate(page, limit);
+      response.header('qtd', data.total);
 
-    return data.all();
+      return data.all();
+
+    } catch (error) {
+      throw new Exception(error.getMessage());
+    }
   }
 }
