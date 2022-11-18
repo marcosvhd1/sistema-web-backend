@@ -70,6 +70,7 @@ Route.group(() => {
     Route.group(() => {
       Route.get('/', 'TransportadorasController.getTransportadoras');
       Route.get('/only/:id', 'TransportadorasController.getTransportadoraById');
+      Route.get('/filter', 'TransportadorasController.searchFilter');
 
       Route.post('/', 'TransportadorasController.setTransportadora');
 
