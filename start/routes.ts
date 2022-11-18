@@ -31,7 +31,7 @@ Route.group(() => {
     Route.group(() => {
       Route.get('/', 'ClientesController.getClientes');
       Route.get('/only/:id', 'ClientesController.getClienteById');
-      Route.get('/maxcod', 'ClientesController.maxCod');
+      Route.get('/max', 'ClientesController.max');
       Route.get('/filter', 'ClientesController.searchFilter');
 
       Route.post('/', 'ClientesController.setCliente');
@@ -44,7 +44,7 @@ Route.group(() => {
     Route.group(() => {
       Route.get('/', 'ProdutosController.getProdutos');
       Route.get('/only/:id', 'ProdutosController.getProdutoById');
-      Route.get('/maxnprod', 'ProdutosController.maxNProd');
+      Route.get('/max', 'ProdutosController.max');
       Route.get('/filter', 'ProdutosController.searchFilter');
 
       Route.post('/', 'ProdutosController.setProduto');
@@ -57,7 +57,7 @@ Route.group(() => {
     Route.group(() => {
       Route.get('/', 'ServicosController.getServicos');
       Route.get('/only/:id', 'ServicosController.getServicoById');
-      Route.get('/maxnserv', 'ServicosController.maxNServ');
+      Route.get('/max', 'ServicosController.max');
       Route.get('/filter', 'ServicosController.searchFilter');
 
       Route.post('/', 'ServicosController.setServico');
