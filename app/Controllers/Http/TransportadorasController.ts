@@ -115,9 +115,10 @@ export default class TransportadorasController {
 
     const page = request.input('page', 1);
     const limit = request.input('limit');
+    const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Database.from('transportadoras').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).orderBy('id').paginate(page, limit);
+      const data = await Database.from('transportadoras').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
       response.header('qtd', data.total);
 
       return data.all();

@@ -40,18 +40,10 @@ export default class ClientesController {
       await Cliente.create(request.body());
 
       response.status(201);
-<<<<<<< HEAD
-
-    } catch (error: any) {
-      throw new Exception(error.getMessage());
-    }
-
-=======
 
     } catch (error) {
       throw new Exception(error);
     }
->>>>>>> adea056d653ce28bb2a051c1d32cdc917c0b6575
   }
 
   public async updateCliente({ request, params }: HttpContextContract) {
