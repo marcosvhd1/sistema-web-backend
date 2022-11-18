@@ -11,7 +11,7 @@ export default class EmissoresController {
       return await Emissor.all();
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -21,7 +21,7 @@ export default class EmissoresController {
       return await Emissor.find(params.id);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -33,7 +33,7 @@ export default class EmissoresController {
       response.status(201);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -53,7 +53,7 @@ export default class EmissoresController {
       }
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -67,7 +67,7 @@ export default class EmissoresController {
       }
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 }

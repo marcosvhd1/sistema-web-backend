@@ -11,7 +11,7 @@ export default class UsuariosController {
       return await Usuario.all();
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -21,7 +21,7 @@ export default class UsuariosController {
       return await Usuario.find(params.id);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -33,7 +33,7 @@ export default class UsuariosController {
       response.status(201);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -55,7 +55,7 @@ export default class UsuariosController {
       }
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -69,7 +69,7 @@ export default class UsuariosController {
       }
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 }

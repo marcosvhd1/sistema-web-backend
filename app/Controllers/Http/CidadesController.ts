@@ -11,7 +11,7 @@ export default class CidadesController {
       return await Cidade.all();
 
     } catch (error: any) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
 
   }
@@ -22,7 +22,7 @@ export default class CidadesController {
       return await Cidade.find(params.id);
 
     } catch (error: any) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -32,7 +32,7 @@ export default class CidadesController {
       return await Cidade.find(params.uf);
 
     } catch (error: any) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -44,7 +44,7 @@ export default class CidadesController {
       response.status(201);
 
     } catch (error: any) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -63,7 +63,7 @@ export default class CidadesController {
       }
 
     } catch (error: any) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -77,7 +77,7 @@ export default class CidadesController {
       }
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 }

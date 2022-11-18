@@ -10,16 +10,17 @@ export default class ProdutosController {
 
     const page = request.input('page', 1);
     const limit = request.input('limit');
+    const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Database.from('produtos').orderBy('id').paginate(page, limit);
+      const data = await Database.from('produtos').select('*').where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
 
       response.header('qtd', data.total);
 
       return data.all();
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -29,7 +30,7 @@ export default class ProdutosController {
       return await Produto.find(params.id);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -41,7 +42,7 @@ export default class ProdutosController {
       response.status(201);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -89,34 +90,35 @@ export default class ProdutosController {
       }
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
-  public async deleteProduto({ params }: HttpContextContract) {
+  public async deleteProduto({ params, request }: HttpContextContract) {
+
+    const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Produto.find(params.id);
-
-      if (data != null) {
-        await data.delete();
-      }
+      await Database.from('produtos').delete().where('id', '=', params.id).where('id_emissor', '=', id_emissor);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
-  public async maxNProd() {
+  public async max({ request }: HttpContextContract) {
+
+    const id_emissor = request.input('id_emissor');
 
     try {
-      const maxNProd = await Database.rawQuery('select max(nprod) from produtos');
+      const max = await Database.from('produtos').select('max(nprod)').where('id_emissor', '=', id_emissor);
 
-      return maxNProd;
+      return max;
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
+
   }
 
   public async searchFilter({ request, response }: HttpContextContract) {
@@ -124,15 +126,16 @@ export default class ProdutosController {
 
     const page = request.input('page', 1);
     const limit = request.input('limit');
+    const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Database.from('produtos').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).orderBy('id').paginate(page, limit);
+      const data = await Database.from('produtos').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
       response.header('qtd', data.total);
 
       return data.all();
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 }

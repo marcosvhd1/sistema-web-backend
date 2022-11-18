@@ -11,7 +11,7 @@ export default class EmissorUsuariosController {
       return await EmissorUsuario.all();
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -21,7 +21,7 @@ export default class EmissorUsuariosController {
       return await EmissorUsuario.find(params.id);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -33,7 +33,7 @@ export default class EmissorUsuariosController {
       response.status(201);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -53,7 +53,7 @@ export default class EmissorUsuariosController {
       }
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -67,7 +67,7 @@ export default class EmissorUsuariosController {
       }
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 }

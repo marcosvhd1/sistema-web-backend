@@ -10,16 +10,17 @@ export default class ClientesController {
 
     const page = request.input('page', 1);
     const limit = request.input('limit');
+    const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Database.from('clientes').orderBy('id').paginate(page, limit);
+      const data = await Database.from('clientes').select('*').where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
 
       response.header('qtd', data.total);
 
       return data.all();
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -29,7 +30,7 @@ export default class ClientesController {
       return await Cliente.find(params.id);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -41,7 +42,7 @@ export default class ClientesController {
       response.status(201);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -88,33 +89,33 @@ export default class ClientesController {
       }
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
-  public async deleteCliente({ params }: HttpContextContract) {
+  public async deleteCliente({ params, request }: HttpContextContract) {
+
+    const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Cliente.find(params.id);
-
-      if (data != null) {
-        await data.delete();
-      }
+      await Database.from('clientes').delete().where('id', '=', params.id).where('id_emissor', '=', id_emissor);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
-  public async maxCod() {
+  public async max({ request }: HttpContextContract) {
+
+    const id_emissor = request.input('id_emissor');
 
     try {
-      const maxCod = await Database.rawQuery('select max(cod) from clientes');
+      const max = await Database.from('clientes').select('max(cod)').where('id_emissor', '=', id_emissor);
 
-      return maxCod;
+      return max;
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
 
   }
@@ -124,15 +125,16 @@ export default class ClientesController {
 
     const page = request.input('page', 1);
     const limit = request.input('limit');
+    const id_emissor = request.input('id_emissor');
 
     try {
-      const cliente = await Database.from('clientes').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).orderBy('id').paginate(page, limit);
+      const cliente = await Database.from('clientes').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
       response.header('qtd', cliente.total);
 
       return cliente.all();
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 }

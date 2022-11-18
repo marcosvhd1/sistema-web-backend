@@ -10,16 +10,17 @@ export default class ServicosController {
 
     const page = request.input('page', 1);
     const limit = request.input('limit');
+    const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Database.from('servicos').orderBy('id').paginate(page, limit);
+      const data = await Database.from('servicos').select('*').where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
 
       response.header('qtd', data.total);
 
       return data.all();
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -29,7 +30,7 @@ export default class ServicosController {
       return await Servico.find(params.id);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
 
   }
@@ -42,7 +43,7 @@ export default class ServicosController {
       response.status(201);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
@@ -69,34 +70,35 @@ export default class ServicosController {
       }
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
-  public async deleteServico({ params }: HttpContextContract) {
+  public async deleteServico({ params, request }: HttpContextContract) {
+
+    const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Servico.find(params.id);
-
-      if (data != null) {
-        await data.delete();
-      }
+      await Database.from('servicos').delete().where('id', '=', params.id).where('id_emissor', '=', id_emissor);
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 
-  public async maxNServ() {
+  public async max({ request }: HttpContextContract) {
+
+    const id_emissor = request.input('id_emissor');
 
     try {
-      const maxNProd = await Database.rawQuery('select max(nserv) from servicos');
+      const max = await Database.from('servicos').select('max(nserv)').where('id_emissor', '=', id_emissor);
 
-      return maxNProd;
+      return max;
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
+
   }
 
   public async searchFilter({ request, response }: HttpContextContract) {
@@ -104,15 +106,16 @@ export default class ServicosController {
 
     const page = request.input('page', 1);
     const limit = request.input('limit');
+    const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Database.from('servicos').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).orderBy('id').paginate(page, limit);
+      const data = await Database.from('servicos').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
       response.header('qtd', data.total);
 
       return data.all();
 
     } catch (error) {
-      throw new Exception(error.getMessage());
+      throw new Exception(error);
     }
   }
 }
