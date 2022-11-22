@@ -2,9 +2,11 @@ import Route from '@ioc:Adonis/Core/Route';
 
 Route.group(() => {
   Route.post('/login', 'LoginController.auth');
+  Route.get('/emissor', 'EmissoresController.getEmissoresByUser');
+  Route.patch('/ultimoEmissor', 'UsuariosController.updateUltimoEmissorSelecionado');
+  Route.get('/ultimoEmissor', 'UsuariosController.getUltimoEmissorSelecionadoByUser');
 
   Route.group(() => {
-    Route.get('/token', 'LoginController.getToken');
 
     Route.group(() => {
       Route.get('/', 'EmpresasController.getEmpresas');
@@ -23,7 +25,7 @@ Route.group(() => {
 
       Route.post('/', 'UsuariosController.setUsuario');
 
-      Route.put('/:id', 'UsuariosController.updateUsuario');
+      Route.patch('/:id', 'UsuariosController.updateUsuario');
 
       Route.delete('/:id', 'UsuariosController.deleteUsuario');
     }).prefix('/usuarios');

@@ -25,6 +25,8 @@ export default class LoginController {
         autenticado: true,
         admin: user.tipo_admin === 1 ? 1 : 0,
         token: token,
+        idUser: user.id,
+        ultimoEmissor: user.ultimo_emissor_selecionado
       };
 
       return data;
@@ -32,5 +34,9 @@ export default class LoginController {
     } catch (e: any) {
       return response.unauthorized('Credenciais inválidas');
     }
+  }
+
+  public async getToken() {
+    console.log('foi');
   }
 }

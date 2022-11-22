@@ -110,7 +110,7 @@ export default class ClientesController {
     const id_emissor = request.input('id_emissor');
 
     try {
-      const max = await Database.from('clientes').select('max(cod)').where('id_emissor', '=', id_emissor);
+      const max = await Database.from('clientes').max('cod').where('id_emissor', '=', id_emissor);
 
       return max;
 

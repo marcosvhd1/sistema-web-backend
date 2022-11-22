@@ -1,32 +1,31 @@
 import { Exception } from '@adonisjs/core/build/standalone';
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+import Database from '@ioc:Adonis/Lucid/Database';
 
 import Emissor from 'App/Models/Emissor';
 
 export default class EmissoresController {
 
-  public async getEmissores() {
+  public async getEmissoresByUser({ request }: HttpContextContract) {
+    const idUsuario = request.input('id_usuario');
+    const idEmissores: number[] = [];
 
     try {
-      return await Emissor.all();
+
+      const data = await Database.from('emissor_usuarios').where('id_usuario', '=', idUsuario);
+
+      data.forEach((e: { id_emissor: number; }) => idEmissores.push(e.id_emissor));
+
+      return await Database.from('emissores').whereIn('id', idEmissores);
 
     } catch (error) {
+
       throw new Exception(error);
-    }
-  }
 
-  public async getEmissorById({ params }: HttpContextContract) {
-
-    try {
-      return await Emissor.find(params.id);
-
-    } catch (error) {
-      throw new Exception(error);
     }
   }
 
   public async setEmissor({ request, response }: HttpContextContract) {
-
     try {
       await Emissor.create(request.body());
 

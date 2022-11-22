@@ -19,6 +19,9 @@ export default class Usuario extends BaseModel {
   public tipo_admin: number;
 
   @column()
+  public ultimo_emissor_selecionado: number;
+
+  @column()
   public rememberMeToken: string | null;
 
   @column.dateTime({ autoCreate: true })
