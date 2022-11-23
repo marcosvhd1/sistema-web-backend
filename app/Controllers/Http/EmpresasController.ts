@@ -1,44 +1,20 @@
-import { Exception } from '@adonisjs/core/build/standalone';
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+import { Exception } from '@adonisjs/core/build/standalone';
 
 import Empresa from 'App/Models/Empresa';
 
 export default class EmpresasController {
 
-  public async getEmpresas() {
-
-    try {
-      return await Empresa.all();
-
-    } catch (error) {
-      throw new Exception(error);
-    }
-  }
-
-  public async getEmpresaById({ params }: HttpContextContract) {
-
-    try {
-      return await Empresa.find(params.id);
-
-    } catch (error) {
-      throw new Exception(error);
-    }
-  }
-
-  public async setEmpresa({ request, response }: HttpContextContract) {
-
+  public async create({ request, response }: HttpContextContract) {
     try {
       await Empresa.create(request.body());
-
       response.status(201);
-
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
 
-  public async updateEmpresa({ request, params }: HttpContextContract) {
-
+  public async update({ request, params }: HttpContextContract) {
     const body = request.body();
 
     try {
@@ -49,14 +25,12 @@ export default class EmpresasController {
 
         await data.save();
       }
-
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
 
-  public async deleteEmpresa({ params }: HttpContextContract) {
-
+  public async delete({ params }: HttpContextContract) {
     try {
       const data = await Empresa.find(params.id);
 
@@ -64,7 +38,7 @@ export default class EmpresasController {
         await data.delete();
       }
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }

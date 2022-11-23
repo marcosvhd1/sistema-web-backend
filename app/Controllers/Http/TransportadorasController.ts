@@ -19,7 +19,7 @@ export default class TransportadorasController {
 
       return data.all();
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -29,7 +29,7 @@ export default class TransportadorasController {
     try {
       return await Transportadora.find(params.id);
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -41,7 +41,7 @@ export default class TransportadorasController {
 
       response.status(201);
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -78,7 +78,7 @@ export default class TransportadorasController {
         await data.save();
       }
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -90,7 +90,7 @@ export default class TransportadorasController {
     try {
       await Database.from('servicos').delete().where('id', '=', params.id).where('id_emissor', '=', id_emissor);
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -104,7 +104,7 @@ export default class TransportadorasController {
 
       return max;
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
 
@@ -123,7 +123,7 @@ export default class TransportadorasController {
 
       return data.all();
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }

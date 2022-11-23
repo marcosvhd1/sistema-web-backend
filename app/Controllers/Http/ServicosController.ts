@@ -19,7 +19,7 @@ export default class ServicosController {
 
       return data.all();
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -29,7 +29,7 @@ export default class ServicosController {
     try {
       return await Servico.find(params.id);
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
 
@@ -42,7 +42,7 @@ export default class ServicosController {
 
       response.status(201);
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -69,7 +69,7 @@ export default class ServicosController {
         await data.save();
       }
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -81,7 +81,7 @@ export default class ServicosController {
     try {
       await Database.from('servicos').delete().where('id', '=', params.id).where('id_emissor', '=', id_emissor);
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -95,7 +95,7 @@ export default class ServicosController {
 
       return max;
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
 
@@ -114,7 +114,7 @@ export default class ServicosController {
 
       return data.all();
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }

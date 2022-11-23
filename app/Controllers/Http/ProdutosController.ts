@@ -19,7 +19,7 @@ export default class ProdutosController {
 
       return data.all();
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -29,7 +29,7 @@ export default class ProdutosController {
     try {
       return await Produto.find(params.id);
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -41,7 +41,7 @@ export default class ProdutosController {
 
       response.status(201);
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -89,7 +89,7 @@ export default class ProdutosController {
         await data.save();
       }
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -101,7 +101,7 @@ export default class ProdutosController {
     try {
       await Database.from('produtos').delete().where('id', '=', params.id).where('id_emissor', '=', id_emissor);
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -115,7 +115,7 @@ export default class ProdutosController {
 
       return max;
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
 
@@ -134,7 +134,7 @@ export default class ProdutosController {
 
       return data.all();
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }

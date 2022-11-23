@@ -76,7 +76,7 @@ export default class CidadesController {
         await data.delete();
       }
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }

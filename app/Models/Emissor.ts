@@ -49,21 +49,24 @@ export default class Emissore extends BaseModel {
 
         emissor.id_empresa = empresa.id;
       }
-    } catch (error) {
-      console.log(error);
-
+    } catch (error: any) {
+      throw new Error(error);
     }
   }
 
   @afterCreate()
   public static async createEmissorUsuario(emissor: Emissore) {
-    const usersAdmins = await Database.from('usuarios').where('tipo_admin', '=', 1).where('id_empresa', '=', emissor.id_empresa);
+    try {
+      const usersAdmins = await Database.from('usuarios').where('tipo_admin', '=', 1).where('id_empresa', '=', emissor.id_empresa);
 
-    usersAdmins.forEach(async user => {
-      await EmissorUsuario.create({
-        id_usuario: user.id,
-        id_emissor: emissor.id,
+      usersAdmins.forEach(async user => {
+        await EmissorUsuario.create({
+          id_usuario: user.id,
+          id_emissor: emissor.id,
+        });
       });
-    });
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 }

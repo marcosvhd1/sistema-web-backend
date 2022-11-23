@@ -35,8 +35,4 @@ export default class LoginController {
       return response.unauthorized('Credenciais inválidas');
     }
   }
-
-  public async getToken() {
-    console.log('foi');
-  }
 }

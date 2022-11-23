@@ -1,67 +1,36 @@
-import { Exception } from '@adonisjs/core/build/standalone';
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+import { Exception } from '@adonisjs/core/build/standalone';
 import Database from '@ioc:Adonis/Lucid/Database';
-import Empresa from 'App/Models/Empresa';
 
 import Usuario from 'App/Models/Usuario';
 
 export default class UsuariosController {
 
-  public async getUsuarios({ request, response }: HttpContextContract) {
-
+  public async getAll({ request, response }: HttpContextContract) {
     const page = request.input('page', 1);
     const limit = request.input('limit');
     const id_emissor = request.input('id_emissor');
 
     try {
       const data = await Database.from('usuarios').where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
-
       response.header('qtd', data.total);
 
       return data.all();
-
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
 
-  public async getUltimoEmissorSelecionadoByUser({ request }: HttpContextContract) {
-    const cnpjcpf = request.input('cnpjcpf');
-    const emailRequest = request.input('email');
-
-    try {
-      const { id } = await Empresa.findByOrFail('cnpjcpf', cnpjcpf);
-
-      const users = await Database.from('usuarios').where('id_empresa', '=', id);
-
-      const user = users.find((e) => emailRequest.includes(e.email));
-
-      const result = {
-        idUsuario: user.id,
-        ultimoEmissorSelecionado: user.ultimo_emissor_selecionado
-      };
-
-      return result;
-
-    } catch (error) {
-      throw new Exception(error);
-    }
-  }
-
-  public async setUsuario({ request, response }: HttpContextContract) {
-
+  public async create({ request, response }: HttpContextContract) {
     try {
       await Usuario.create(request.body());
-
       response.status(201);
-
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
 
-  public async updateUsuario({ request, params }: HttpContextContract) {
-
+  public async update({ request, params }: HttpContextContract) {
     const body = request.body();
 
     try {
@@ -73,41 +42,19 @@ export default class UsuariosController {
         data.password = body.password;
         data.tipo_admin = body.tipo_admin;
         data.rememberMeToken = body.rememberMeToken;
-
         await data.save();
       }
-
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
 
-  public async updateUltimoEmissorSelecionado({ request }: HttpContextContract) {
-
-    const idUsuario = request.input('id_usuario');
-    const idEmissor = request.input('id_emissor');
-
-    try {
-      const data = await Usuario.find(idUsuario);
-
-      if (data != null) {
-        data.ultimo_emissor_selecionado = idEmissor;
-        await data.save();
-      }
-
-    } catch (error) {
-      throw new Exception(error);
-    }
-  }
-
-  public async deleteUsuario({ params, request }: HttpContextContract) {
-
+  public async delete({ params, request }: HttpContextContract) {
     const id_emissor = request.input('id_emissor');
 
     try {
       await Database.from('usuarios').delete().where('id', '=', params.id).where('id_emissor', '=', id_emissor);
-
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }

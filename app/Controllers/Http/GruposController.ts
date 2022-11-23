@@ -19,7 +19,7 @@ export default class GruposController {
 
       return data.all();
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -29,7 +29,7 @@ export default class GruposController {
     try {
       return await Grupo.find(params.id);
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -41,7 +41,7 @@ export default class GruposController {
 
       response.status(201);
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -60,7 +60,7 @@ export default class GruposController {
         await data.save();
       }
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
@@ -72,7 +72,7 @@ export default class GruposController {
     try {
       await Database.from('grupos').delete().where('id', '=', params.id).where('id_emissor', '=', id_emissor);
 
-    } catch (error) {
+    } catch (error: any) {
       throw new Exception(error);
     }
   }
