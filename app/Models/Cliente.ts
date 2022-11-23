@@ -111,7 +111,7 @@ export default class Cliente extends BaseModel {
   @beforeCreate()
   public static async createCod(Cliente: Cliente) {
     try {
-      const lastCod = await Database.rawQuery('select max(cod) from clientes');
+      const lastCod = await Database.rawQuery(`select max(cod) from clientes where id_emissor = ${Cliente.id_emissor}`);
       const { max } = lastCod['rows'][0];
       Cliente.cod = max+1;
     } catch (error) {

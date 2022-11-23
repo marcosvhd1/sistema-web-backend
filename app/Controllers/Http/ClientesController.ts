@@ -130,7 +130,6 @@ export default class ClientesController {
     try {
       const cliente = await Database.from('clientes').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
       response.header('qtd', cliente.total);
-
       return cliente.all();
 
     } catch (error) {
