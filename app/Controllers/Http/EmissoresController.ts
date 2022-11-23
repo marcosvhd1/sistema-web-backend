@@ -44,7 +44,7 @@ export default class EmissoresController {
       const data = await Emissor.find(params.id);
 
       if (data != null) {
-        data.id_empresa = body.id_empresa;
+
         data.razao = body.razao;
         data.cnpjcpf = body.cnpjcpf;
 
