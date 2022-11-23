@@ -36,7 +36,7 @@ export default class Emissore extends BaseModel {
         emissor.id_empresa = data[0].id;
       } else {
         const empresa = await Empresa.create({
-          cnpjcpf: emissor.cnpjcpf
+          cnpjcpf: emissor.cnpjcpf_principal
         });
 
         await Usuario.create({
