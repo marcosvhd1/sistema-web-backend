@@ -5,7 +5,7 @@ import Empresa from './Empresa';
 import Usuario from './Usuario';
 import EmissorUsuario from './EmissorUsuario';
 
-export default class Emissor extends BaseModel {
+export default class Emissore extends BaseModel {
   @column({ isPrimary: true })
   public id: number;
 
@@ -28,7 +28,7 @@ export default class Emissor extends BaseModel {
   public updatedAt: DateTime;
 
   @beforeCreate()
-  public static async createEmissor(emissor: Emissor) {
+  public static async createEmissor(emissor: Emissore) {
     try {
       const data = await Database.from('empresas').where('cnpjcpf', '=', emissor.cnpjcpf_principal);
 
@@ -56,7 +56,7 @@ export default class Emissor extends BaseModel {
   }
 
   @afterCreate()
-  public static async createEmissorUsuario(emissor: Emissor) {
+  public static async createEmissorUsuario(emissor: Emissore) {
     const usersAdmins = await Database.from('usuarios').where('tipo_admin', '=', 1).where('id_empresa', '=', emissor.id_empresa);
 
     usersAdmins.forEach(async user => {
