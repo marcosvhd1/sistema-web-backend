@@ -14,6 +14,9 @@ export default class Emissor extends BaseModel {
   @column()
   public cnpjcpf: string;
 
+  @column()
+  public cnpjcpf_principal: string;
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
 

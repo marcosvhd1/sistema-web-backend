@@ -3,6 +3,7 @@ import Route from '@ioc:Adonis/Core/Route';
 Route.group(() => {
   Route.post('/login', 'LoginController.auth');
   Route.get('/emissor', 'EmissoresController.getEmissoresByUser');
+  Route.post('/emissor', 'EmissoresController.setEmissor');
   Route.patch('/ultimoEmissor', 'UsuariosController.updateUltimoEmissorSelecionado');
   Route.get('/ultimoEmissor', 'UsuariosController.getUltimoEmissorSelecionadoByUser');
 
