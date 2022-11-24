@@ -6,47 +6,42 @@ import Transportadora from 'App/Models/Transportadora';
 
 export default class TransportadorasController {
 
-  public async getTransportadoras({ request, response }: HttpContextContract) {
+  public async max({ request }: HttpContextContract) {
+    const id_emissor = request.input('id_emissor');
 
+    try {
+      const max = await Database.from('servicos').select('max(nserv)').where('id_emissor', '=', id_emissor);
+      return max;
+    } catch (error: any) {
+      throw new Exception(error);
+    }
+  }
+
+  public async getAll({ request, response }: HttpContextContract) {
+    const { filter, description } = request.qs();
     const page = request.input('page', 1);
     const limit = request.input('limit');
     const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Database.from('transportadoras').where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
-
+      const data = await Database.from('transportadoras').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
       response.header('qtd', data.total);
-
       return data.all();
-
     } catch (error: any) {
       throw new Exception(error);
     }
   }
 
-  public async getTransportadoraById({ params }: HttpContextContract) {
-
-    try {
-      return await Transportadora.find(params.id);
-
-    } catch (error: any) {
-      throw new Exception(error);
-    }
-  }
-
-  public async setTransportadora({ request, response }: HttpContextContract) {
-
+  public async create({ request, response }: HttpContextContract) {
     try {
       await Transportadora.create(request.body());
-
       response.status(201);
-
     } catch (error: any) {
       throw new Exception(error);
     }
   }
 
-  public async updateTransportadora({ request, params }: HttpContextContract) {
+  public async update({ request, params }: HttpContextContract) {
     const body = request.body();
 
     try {
@@ -74,55 +69,18 @@ export default class TransportadorasController {
         data.telefone2 = body.telefone2;
         data.placa = body.placa;
         data.uf_placa = body.uf_placa;
-
         await data.save();
       }
-
     } catch (error: any) {
       throw new Exception(error);
     }
   }
 
-  public async deleteTransportadora({ params, request }: HttpContextContract) {
-
+  public async delete({ params, request }: HttpContextContract) {
     const id_emissor = request.input('id_emissor');
 
     try {
       await Database.from('servicos').delete().where('id', '=', params.id).where('id_emissor', '=', id_emissor);
-
-    } catch (error: any) {
-      throw new Exception(error);
-    }
-  }
-
-  public async max({ request }: HttpContextContract) {
-
-    const id_emissor = request.input('id_emissor');
-
-    try {
-      const max = await Database.from('servicos').select('max(nserv)').where('id_emissor', '=', id_emissor);
-
-      return max;
-
-    } catch (error: any) {
-      throw new Exception(error);
-    }
-
-  }
-
-  public async searchFilter({ request, response }: HttpContextContract) {
-    const { filter, description } = request.qs();
-
-    const page = request.input('page', 1);
-    const limit = request.input('limit');
-    const id_emissor = request.input('id_emissor');
-
-    try {
-      const data = await Database.from('transportadoras').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
-      response.header('qtd', data.total);
-
-      return data.all();
-
     } catch (error: any) {
       throw new Exception(error);
     }

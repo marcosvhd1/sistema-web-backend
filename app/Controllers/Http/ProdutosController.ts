@@ -6,48 +6,42 @@ import Produto from 'App/Models/Produto';
 
 export default class ProdutosController {
 
-  public async getProdutos({ request, response }: HttpContextContract) {
+  public async max({ request }: HttpContextContract) {
+    const id_emissor = request.input('id_emissor');
 
+    try {
+      const max = await Database.from('produtos').select('max(nprod)').where('id_emissor', '=', id_emissor);
+      return max;
+    } catch (error: any) {
+      throw new Exception(error);
+    }
+  }
+
+  public async getAll({ request, response }: HttpContextContract) {
+    const { filter, description } = request.qs();
     const page = request.input('page', 1);
     const limit = request.input('limit');
     const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Database.from('produtos').select('*').where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
-
+      const data = await Database.from('produtos').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
       response.header('qtd', data.total);
-
       return data.all();
-
     } catch (error: any) {
       throw new Exception(error);
     }
   }
 
-  public async getProdutoById({ params }: HttpContextContract) {
-
-    try {
-      return await Produto.find(params.id);
-
-    } catch (error: any) {
-      throw new Exception(error);
-    }
-  }
-
-  public async setProduto({ request, response }: HttpContextContract) {
-
+  public async create({ request, response }: HttpContextContract) {
     try {
       await Produto.create(request.body());
-
       response.status(201);
-
     } catch (error: any) {
       throw new Exception(error);
     }
   }
 
-  public async updateProduto({ request, params }: HttpContextContract) {
-
+  public async update({ request, params }: HttpContextContract) {
     const body = request.body();
 
     try {
@@ -85,55 +79,18 @@ export default class ProdutosController {
         data.origem = body.origem;
         data.peso_bruto = body.peso_bruto;
         data.peso_liquido = body.peso_bruto;
-
         await data.save();
       }
-
     } catch (error: any) {
       throw new Exception(error);
     }
   }
 
-  public async deleteProduto({ params, request }: HttpContextContract) {
-
+  public async delete({ params, request }: HttpContextContract) {
     const id_emissor = request.input('id_emissor');
 
     try {
       await Database.from('produtos').delete().where('id', '=', params.id).where('id_emissor', '=', id_emissor);
-
-    } catch (error: any) {
-      throw new Exception(error);
-    }
-  }
-
-  public async max({ request }: HttpContextContract) {
-
-    const id_emissor = request.input('id_emissor');
-
-    try {
-      const max = await Database.from('produtos').select('max(nprod)').where('id_emissor', '=', id_emissor);
-
-      return max;
-
-    } catch (error: any) {
-      throw new Exception(error);
-    }
-
-  }
-
-  public async searchFilter({ request, response }: HttpContextContract) {
-    const { filter, description } = request.qs();
-
-    const page = request.input('page', 1);
-    const limit = request.input('limit');
-    const id_emissor = request.input('id_emissor');
-
-    try {
-      const data = await Database.from('produtos').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
-      response.header('qtd', data.total);
-
-      return data.all();
-
     } catch (error: any) {
       throw new Exception(error);
     }

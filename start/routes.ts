@@ -37,48 +37,41 @@ Route.group(() => {
     }).prefix('/clientes');
 
     Route.group(() => {
-      Route.get('/', 'ProdutosController.getProdutos');
-      Route.get('/only/:id', 'ProdutosController.getProdutoById');
       Route.get('/max', 'ProdutosController.max');
-      Route.get('/filter', 'ProdutosController.searchFilter');
-      Route.post('/', 'ProdutosController.setProduto');
-      Route.put('/:id', 'ProdutosController.updateProduto');
-      Route.delete('/:id', 'ProdutosController.deleteProduto');
+      Route.get('/', 'ProdutosController.getAll');
+      Route.post('/', 'ProdutosController.create');
+      Route.put('/:id', 'ProdutosController.update');
+      Route.delete('/:id', 'ProdutosController.delete');
     }).prefix('/produtos');
 
     Route.group(() => {
-      Route.get('/', 'ServicosController.getServicos');
-      Route.get('/only/:id', 'ServicosController.getServicoById');
       Route.get('/max', 'ServicosController.max');
-      Route.get('/filter', 'ServicosController.searchFilter');
-      Route.post('/', 'ServicosController.setServico');
-      Route.put('/:id', 'ServicosController.updateServico');
-      Route.delete('/:id', 'ServicosController.deleteServico');
+      Route.get('/', 'ServicosController.getAll');
+      Route.post('/', 'ServicosController.create');
+      Route.put('/:id', 'ServicosController.update');
+      Route.delete('/:id', 'ServicosController.delete');
     }).prefix('/servicos');
 
     Route.group(() => {
-      Route.get('/', 'TransportadorasController.getTransportadoras');
-      Route.get('/only/:id', 'TransportadorasController.getTransportadoraById');
-      Route.get('/filter', 'TransportadorasController.searchFilter');
-      Route.post('/', 'TransportadorasController.setTransportadora');
-      Route.put('/:id', 'TransportadorasController.updateTransportadora');
-      Route.delete('/:id', 'TransportadorasController.deleteTransportadora');
+      Route.get('/max', 'TransportadorasController.max');
+      Route.get('/', 'TransportadorasController.getAll');
+      Route.post('/', 'TransportadorasController.create');
+      Route.put('/:id', 'TransportadorasController.update');
+      Route.delete('/:id', 'TransportadorasController.delete');
     }).prefix('/transportadoras');
 
     Route.group(() => {
-      Route.get('/', 'GruposController.getGrupos');
-      Route.get('/only/:id', 'GruposController.getGrupoById');
-      Route.post('/', 'GruposController.setGrupo');
-      Route.put('/:id', 'GruposController.updateGrupo');
-      Route.delete('/:id', 'GruposController.deleteGrupo');
+      Route.get('/', 'GruposController.getAll');
+      Route.post('/', 'GruposController.create');
+      Route.put('/:id', 'GruposController.update');
+      Route.delete('/:id', 'GruposController.delete');
     }).prefix('/grupos');
 
     Route.group(() => {
-      Route.get('/', 'CidadesController.getCidades');
-      Route.get('/only/:id', 'CidadesController.getCidadeById');
-      Route.post('/', 'CidadesController.setCidade');
-      Route.put('/:id', 'CidadesController.updateCidade');
-      Route.delete('/:id', 'CidadesController.deleteCidade');
+      Route.get('/:uf', 'CidadesController.getAll');
+      Route.post('/', 'CidadesController.create');
+      Route.put('/:id', 'CidadesController.update');
+      Route.delete('/:id', 'CidadesController.delete');
     }).prefix('/cidades');
 
   }).middleware('auth');
