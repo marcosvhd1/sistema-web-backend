@@ -24,7 +24,7 @@ export default class ServicosController {
     const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Database.from('servicos').select('*').where(`${filter}::TEXT`, 'ilike', `%${description.toUpperCase()}%`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
+      const data = await Database.from('servicos').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).andWhere('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
       response.header('qtd', data.total);
       return data.all();
     } catch (error: any) {
