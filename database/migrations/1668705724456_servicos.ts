@@ -17,6 +17,7 @@ export default class extends BaseSchema {
       table.string('status', 10);
       table.string('item_lista', 10);
       table.string('ncm', 10);
+      table.string('situacao', 10);
       table.timestamp('created_at', { useTz: true });
       table.timestamp('updated_at', { useTz: true });
     });

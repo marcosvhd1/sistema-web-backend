@@ -39,6 +39,9 @@ export default class Servico extends BaseModel {
   @column()
   public ncm: string;
 
+  @column()
+  public situacao: string;
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
 

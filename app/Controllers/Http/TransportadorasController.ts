@@ -10,7 +10,7 @@ export default class TransportadorasController {
     const id_emissor = request.input('id_emissor');
 
     try {
-      const max = await Database.from('servicos').select('max(nserv)').where('id_emissor', '=', id_emissor);
+      const max = await Database.from('transportadoras').max('cod').where('id_emissor', '=', id_emissor);
       return max;
     } catch (error: any) {
       throw new Exception(error);
