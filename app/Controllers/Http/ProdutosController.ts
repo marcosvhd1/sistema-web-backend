@@ -10,7 +10,7 @@ export default class ProdutosController {
     const id_emissor = request.input('id_emissor');
 
     try {
-      const max = await Database.from('produtos').select('max(nprod)').where('id_emissor', '=', id_emissor);
+      const max = await Database.from('produtos').max('nprod').where('id_emissor', '=', id_emissor);
       return max;
     } catch (error: any) {
       throw new Exception(error);
@@ -24,7 +24,7 @@ export default class ProdutosController {
     const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Database.from('produtos').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
+      const data = await Database.from('produtos').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).andWhere('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
       response.header('qtd', data.total);
       return data.all();
     } catch (error: any) {
