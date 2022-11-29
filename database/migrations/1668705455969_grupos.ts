@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.increments('id').primary().unique().notNullable();
       table.integer('id_emissor').unsigned().references('id').inTable('emissores').onDelete('CASCADE').notNullable();
       table.string('descricao', 300).notNullable();
-      table.string('tpo', 5).notNullable();
+      table.string('tipo', 5).notNullable();
       table.timestamp('created_at', { useTz: true });
       table.timestamp('updated_at', { useTz: true });
     });

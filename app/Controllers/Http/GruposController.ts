@@ -6,15 +6,13 @@ import Grupo from 'App/Models/Grupo';
 
 export default class GruposController {
 
-  public async getAll({ request, response }: HttpContextContract) {
-    const page = request.input('page', 1);
-    const limit = request.input('limit');
+  public async getAll({ request }: HttpContextContract) {
     const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Database.from('grupos').select('*').where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
-      response.header('qtd', data.total);
-      return data.all();
+      const data = await Database.from('grupos').select('*').where('id_emissor', '=', id_emissor).orderBy('id');
+
+      return data;
     } catch (error: any) {
       throw new Exception(error);
     }
