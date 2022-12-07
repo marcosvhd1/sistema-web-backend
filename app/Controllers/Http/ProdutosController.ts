@@ -32,6 +32,20 @@ export default class ProdutosController {
     }
   }
 
+  public async getAllByGroup({ request }: HttpContextContract) {
+    const { filter, description, group } = request.qs();
+    const page = request.input('page', 1);
+    const limit = request.input('limit');
+    const id_emissor = request.input('id_emissor');
+
+    try {
+      const data = await Database.from('produtos').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).andWhere('grupo', '=', group).andWhere('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
+      return data.all();
+    } catch (error: any) {
+      throw new Exception(error);
+    }
+  }
+
   public async create({ request, response }: HttpContextContract) {
     try {
       await Produto.create(request.body());
