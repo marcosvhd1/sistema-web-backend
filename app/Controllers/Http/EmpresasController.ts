@@ -2,8 +2,20 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import { Exception } from '@adonisjs/core/build/standalone';
 
 import Empresa from 'App/Models/Empresa';
+import Database from '@ioc:Adonis/Lucid/Database';
 
 export default class EmpresasController {
+
+
+  public async getEmpresaId({ request }: HttpContextContract) {
+    const { cnpjcpf } = request.qs();
+    try {
+      const data = await Database.from('empresas').select('id').where('cnpjcpf', '=', cnpjcpf);
+      return data;
+    } catch (error: any) {
+      throw new Exception(error);
+    }
+  }
 
   public async create({ request, response }: HttpContextContract) {
     try {

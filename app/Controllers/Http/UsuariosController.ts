@@ -6,22 +6,27 @@ import Usuario from 'App/Models/Usuario';
 
 export default class UsuariosController {
 
-  public async getAll({ request, response }: HttpContextContract) {
-    const page = request.input('page', 1);
-    const limit = request.input('limit');
-    const id_emissor = request.input('id_emissor');
+  public async getAll({ request }: HttpContextContract) {
+    const cnpjcpf = request.input('emp');
 
     try {
-      const data = await Database.from('usuarios').where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
-      response.header('qtd', data.total);
-
-      return data.all();
+      const data = await Database.from('usuarios').join('empresas', 'usuarios.id_empresa', '=', 'empresas.id').select('usuarios.*').where('cnpjcpf', '=', cnpjcpf);
+      return data;
     } catch (error: any) {
       throw new Exception(error);
     }
   }
 
+  public async getUserId({ request }: HttpContextContract) {
+    const email = request.input('user');
+    const id = request.input('id');
+
+    const data = await Database.from('usuarios').where('email', '=', email).andWhere('id_empresa', '=', id);
+    return data;
+  }
+
   public async create({ request, response }: HttpContextContract) {
+
     try {
       await Usuario.create(request.body());
       response.status(201);

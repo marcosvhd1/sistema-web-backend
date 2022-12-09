@@ -16,6 +16,7 @@ Route.group(() => {
   Route.group(() => {
 
     Route.group(() => {
+      Route.get('/', 'EmpresasController.getEmpresaId');
       Route.post('/', 'EmpresasController.create');
       Route.put('/:id', 'EmpresasController.update');
       Route.delete('/:id', 'EmpresasController.delete');
@@ -23,6 +24,7 @@ Route.group(() => {
 
     Route.group(() => {
       Route.get('/', 'UsuariosController.getAll');
+      Route.get('/new', 'UsuariosController.getUserId');
       Route.post('/', 'UsuariosController.create');
       Route.patch('/:id', 'UsuariosController.update');
       Route.delete('/:id', 'UsuariosController.delete');
@@ -74,6 +76,10 @@ Route.group(() => {
       Route.put('/:id', 'CidadesController.update');
       Route.delete('/:id', 'CidadesController.delete');
     }).prefix('/cidades');
+
+    Route.group(() => {
+      Route.post('/', 'EmissorUsuarioController.create');
+    }).prefix('/emissor/usuario');
 
   }).middleware('auth');
 
