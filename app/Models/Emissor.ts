@@ -45,6 +45,7 @@ export default class Emissore extends BaseModel {
           password: '1234',
           tipo_admin: 1,
           ultimo_emissor_selecionado: 1,
+          usuario_principal: 'Sim'
         });
 
         emissor.id_empresa = empresa.id;

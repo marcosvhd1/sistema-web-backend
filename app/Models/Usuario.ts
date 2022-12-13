@@ -22,7 +22,7 @@ export default class Usuario extends BaseModel {
   public ultimo_emissor_selecionado: number;
 
   @column()
-  public rememberMeToken: string | null;
+  public usuario_principal: string;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;

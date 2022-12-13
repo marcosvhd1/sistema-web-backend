@@ -46,7 +46,7 @@ export default class UsuariosController {
         data.email = body.email;
         data.password = body.password;
         data.tipo_admin = body.tipo_admin;
-        data.rememberMeToken = body.rememberMeToken;
+        data.usuario_principal = body.usuario_principal;
         await data.save();
       }
     } catch (error: any) {
@@ -54,11 +54,9 @@ export default class UsuariosController {
     }
   }
 
-  public async delete({ params, request }: HttpContextContract) {
-    const id_emissor = request.input('id_emissor');
-
+  public async delete({ params }: HttpContextContract) {
     try {
-      await Database.from('usuarios').delete().where('id', '=', params.id).where('id_emissor', '=', id_emissor);
+      await Database.from('usuarios').delete().where('id', '=', params.id).andWhere('usuario_principal', '=', 'Não');
     } catch (error: any) {
       throw new Exception(error);
     }

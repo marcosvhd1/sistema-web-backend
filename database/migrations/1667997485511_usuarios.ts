@@ -9,7 +9,7 @@ export default class extends BaseSchema {
       table.integer('id_empresa').unsigned().references('id').inTable('empresas').onDelete('CASCADE').notNullable();
       table.string('email', 255).notNullable();
       table.string('password', 180).notNullable();
-      table.string('remember_me_token').nullable();
+      table.string('usuario_principal', 3).notNullable();
       table.integer('tipo_admin').nullable();
       table.integer('ultimo_emissor_selecionado').nullable();
       table.timestamp('created_at', { useTz: true }).notNullable();
