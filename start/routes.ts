@@ -81,6 +81,7 @@ Route.group(() => {
     Route.group(() => {
       Route.get('/', 'EmissorUsuarioController.getAllIdByUser');
       Route.post('/', 'EmissorUsuarioController.create');
+      Route.delete('/:id', 'EmissorUsuarioController.delete');
     }).prefix('/emissor/usuario');
 
   }).middleware('auth');

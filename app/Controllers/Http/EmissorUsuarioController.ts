@@ -27,4 +27,12 @@ export default class EmissorUsuarioController {
     }
   }
 
+  public async delete({ params }: HttpContextContract) {
+    try {
+      await Database.from('emissor_usuarios').delete().where('id_usuario', '=', params.id);
+    } catch (error) {
+      throw new Exception(error);
+    }
+  }
+
 }
