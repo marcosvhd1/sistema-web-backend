@@ -15,7 +15,7 @@ export default class LoginController {
 
       const users = await Database.from('usuarios').where('id_empresa', '=', id);
 
-      const user = users.find((e) => emailRequest.includes(e.email));
+      const user = users.find((e) => e.email === emailRequest);
 
       const token = await auth.use('api').attempt(emailRequest, password, {
         expiresIn: '1 day',
@@ -23,10 +23,11 @@ export default class LoginController {
 
       const data = {
         autenticado: true,
-        admin: user.tipo_admin === 1 ? 1 : 0,
+        admin: user.tipo_admin,
         token: token,
         idUser: user.id,
-        ultimoEmissor: user.ultimo_emissor_selecionado
+        ultimoEmissor: user.ultimo_emissor_selecionado,
+        usuarioPrincipal: user.usuario_principal
       };
 
       return data;

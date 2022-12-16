@@ -25,6 +25,7 @@ Route.group(() => {
     Route.group(() => {
       Route.get('/', 'UsuariosController.getAll');
       Route.get('/new', 'UsuariosController.getUserId');
+      Route.get('/master', 'UsuariosController.getMasterUser');
       Route.post('/', 'UsuariosController.create');
       Route.patch('/:id', 'UsuariosController.update');
       Route.delete('/:id', 'UsuariosController.delete');
@@ -78,6 +79,7 @@ Route.group(() => {
     }).prefix('/cidades');
 
     Route.group(() => {
+      Route.get('/', 'EmissorUsuarioController.getAllIdByUser');
       Route.post('/', 'EmissorUsuarioController.create');
     }).prefix('/emissor/usuario');
 

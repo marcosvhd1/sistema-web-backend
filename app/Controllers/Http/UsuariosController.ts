@@ -25,6 +25,12 @@ export default class UsuariosController {
     return data;
   }
 
+  public async getMasterUser({ request }: HttpContextContract) {
+    const cnpjcpf = request.input('emp');
+    const data = await Database.from('usuarios').join('empresas', 'usuarios.id_empresa', '=', 'empresas.id').select('usuarios.*').where('cnpjcpf', '=', cnpjcpf).andWhere('usuario_principal', '=', 'Sim');
+    return data;
+  }
+
   public async create({ request, response }: HttpContextContract) {
 
     try {
