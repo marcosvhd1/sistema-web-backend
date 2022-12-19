@@ -22,11 +22,19 @@ export default class ProdutosController {
     const page = request.input('page', 1);
     const limit = request.input('limit');
     const id_emissor = request.input('id_emissor');
+    const status = request.input('status');
 
     try {
-      const data = await Database.from('produtos').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).andWhere('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
-      response.header('qtd', data.total);
-      return data.all();
+      if (status === 'Ativo') {
+        const data = await Database.from('produtos').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).andWhere('id_emissor', '=', id_emissor).andWhere('status', '=', 'Ativo').orderBy('id').paginate(page, limit);
+        response.header('qtd', data.total);
+        return data.all();
+
+      } else {
+        const data = await Database.from('produtos').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).andWhere('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
+        response.header('qtd', data.total);
+        return data.all();
+      }
     } catch (error: any) {
       throw new Exception(error);
     }
@@ -37,9 +45,10 @@ export default class ProdutosController {
     const page = request.input('page', 1);
     const limit = request.input('limit');
     const id_emissor = request.input('id_emissor');
+    const status = request.input('status');
 
     try {
-      const data = await Database.from('produtos').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).andWhere('grupo', '=', group).andWhere('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
+      const data = await Database.from('produtos').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).andWhere('grupo', '=', group).andWhere('id_emissor', '=', id_emissor).andWhere('status', '=', status).orderBy('id').paginate(page, limit);
       return data.all();
     } catch (error: any) {
       throw new Exception(error);
