@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { afterCreate, BaseModel, beforeCreate, column } from '@ioc:Adonis/Lucid/Orm';
+import { afterCreate, afterUpdate, BaseModel, beforeCreate, column } from '@ioc:Adonis/Lucid/Orm';
 import Database from '@ioc:Adonis/Lucid/Database';
 import Empresa from './Empresa';
 import Usuario from './Usuario';
@@ -20,6 +20,9 @@ export default class Emissore extends BaseModel {
 
   @column()
   public cnpjcpf_principal: string;
+
+  @column()
+  public status: string;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
@@ -45,10 +48,12 @@ export default class Emissore extends BaseModel {
           password: '1234',
           tipo_admin: 1,
           ultimo_emissor_selecionado: 1,
-          usuario_principal: 'Sim'
+          usuario_principal: 'Sim',
+          status: 'Ativo'
         });
 
         emissor.id_empresa = empresa.id;
+        emissor.status = 'Ativo';
       }
     } catch (error: any) {
       throw new Error(error);
@@ -70,4 +75,23 @@ export default class Emissore extends BaseModel {
       throw new Error(error);
     }
   }
+
+  @afterUpdate()
+  public static async teste(emissor: Emissore) {
+    const id = emissor.id;
+    if (emissor.status === 'Inativo') {
+      try {
+        const usersByEmi = await Database.from('usuarios').where('ultimo_emissor_selecionado', '=', id);
+        usersByEmi.forEach(async e => {
+          await Database.rawQuery(
+            'update usuarios set ultimo_emissor_selecionado = 0 where id = ?',
+            [e.id]
+          );
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
 }

@@ -6,7 +6,7 @@ export default class extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary().unique().notNullable();
-      table.integer('id_emissor').unsigned().references('id').inTable('emissores').onDelete('CASCADE').notNullable();
+      table.integer('id_emissor').unsigned().references('id').inTable('emissores').notNullable();
       table.integer('cod').notNullable();
       table.string('tipo', 1).notNullable();
       table.string('categoria', 50).notNullable();

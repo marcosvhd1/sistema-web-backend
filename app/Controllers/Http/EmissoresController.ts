@@ -3,7 +3,6 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import Database from '@ioc:Adonis/Lucid/Database';
 
 import Emissor from 'App/Models/Emissor';
-import Empresa from 'App/Models/Empresa';
 import Usuario from 'App/Models/Usuario';
 
 export default class EmissoresController {
@@ -15,8 +14,30 @@ export default class EmissoresController {
     try {
       const data = await Database.from('emissor_usuarios').where('id_usuario', '=', idUsuario);
       data.forEach((e: { id_emissor: number; }) => idEmissores.push(e.id_emissor));
-      return await Database.from('emissores').whereIn('id', idEmissores);
+      return await Database.from('emissores').whereIn('id', idEmissores).orderBy('status');
     } catch (error: any) {
+      throw new Exception(error);
+    }
+  }
+
+  public async getAllByEmp({ request, response }: HttpContextContract) {
+    const { filter, description } = request.qs();
+    const page = request.input('page', 1);
+    const limit = request.input('limit');
+    const status = request.input('status');
+    const idEmpresa = request.input('empresa');
+
+    try {
+      if (status === 'Ativo') {
+        const data = await Database.from('emissores').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).where('id_empresa', '=', idEmpresa).andWhere('status', '=', 'Ativo').orderBy('id').paginate(page, limit);
+        response.header('qtd', data.total);
+        return data.all();
+      } else {
+        const data = await Database.from('emissores').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).where('id_empresa', '=', idEmpresa).orderBy('id').paginate(page, limit);
+        response.header('qtd', data.total);
+        return data.all();
+      }
+    } catch (error) {
       throw new Exception(error);
     }
   }
@@ -39,6 +60,7 @@ export default class EmissoresController {
       if (data != null) {
         data.razao = body.razao;
         data.cnpjcpf = body.cnpjcpf;
+        data.status = body.status;
         await data.save();
       }
     } catch (error: any) {
@@ -46,7 +68,7 @@ export default class EmissoresController {
     }
   }
 
-  public async delete({ params }: HttpContextContract) {
+  public async delete({ params, response }: HttpContextContract) {
     try {
       const data = await Emissor.find(params.id);
 
@@ -54,7 +76,11 @@ export default class EmissoresController {
         await data.delete();
       }
     } catch (error: any) {
-      throw new Exception(error);
+      response.send({
+        status: '500',
+        code: error.code,
+        message: error.message
+      });
     }
   }
 
@@ -70,7 +96,7 @@ export default class EmissoresController {
         await data.save();
       }
     } catch (error: any) {
-      throw new Exception(error);
+      throw new Error(error);
     }
   }
 
@@ -79,7 +105,8 @@ export default class EmissoresController {
     const emailRequest = request.input('email');
 
     try {
-      const { id } = await Empresa.findByOrFail('cnpjcpf', cnpjcpf);
+      const data = await Database.from('empresas').where('cnpjcpf', '=', cnpjcpf);
+      const { id } = data[0];
       const users = await Database.from('usuarios').where('id_empresa', '=', id);
       const user = users.find((e) => emailRequest.includes(e.email));
 

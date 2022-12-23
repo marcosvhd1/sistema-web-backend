@@ -5,8 +5,9 @@ Route.group(() => {
 
   Route.group(() => {
     Route.get('/', 'EmissoresController.getAll');
+    Route.get('/all', 'EmissoresController.getAllByEmp');
     Route.post('/', 'EmissoresController.create');
-    Route.put('/:id', 'EmissoresController.update');
+    Route.patch('/update/:id', 'EmissoresController.update');
     Route.delete('/:id', 'EmissoresController.delete');
 
     Route.patch('/ultimo', 'EmissoresController.updateUltimoEmissorSelecionado');

@@ -53,6 +53,7 @@ export default class UsuariosController {
         data.password = body.password;
         data.tipo_admin = body.tipo_admin;
         data.usuario_principal = body.usuario_principal;
+        data.status = body.status;
         await data.save();
       }
     } catch (error: any) {

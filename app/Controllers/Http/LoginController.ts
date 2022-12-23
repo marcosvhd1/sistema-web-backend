@@ -17,20 +17,27 @@ export default class LoginController {
 
       const user = users.find((e) => e.email === emailRequest);
 
-      const token = await auth.use('api').attempt(emailRequest, password, {
-        expiresIn: '1 day',
-      });
+      if (user.status === 'Ativo') {
 
-      const data = {
-        autenticado: true,
-        admin: user.tipo_admin,
-        token: token,
-        idUser: user.id,
-        ultimoEmissor: user.ultimo_emissor_selecionado,
-        usuarioPrincipal: user.usuario_principal
-      };
+        const token = await auth.use('api').attempt(emailRequest, password, {
+          expiresIn: '1 day',
+        });
 
-      return data;
+        const data = {
+          autenticado: true,
+          admin: user.tipo_admin,
+          token: token,
+          idUser: user.id,
+          ultimoEmissor: user.ultimo_emissor_selecionado,
+          usuarioPrincipal: user.usuario_principal,
+          status: user.status
+        };
+
+        return data;
+
+      } else {
+        return response.notAcceptable('Usuário bloqueado');
+      }
 
     } catch (e: any) {
       return response.unauthorized('Credenciais inválidas');

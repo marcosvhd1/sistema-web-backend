@@ -10,6 +10,7 @@ export default class extends BaseSchema {
       table.string('razao', 255);
       table.string('cnpjcpf', 30);
       table.string('cnpjcpf_principal', 30);
+      table.string('status', 8);
       table.timestamp('created_at', { useTz: true });
       table.timestamp('updated_at', { useTz: true });
     });

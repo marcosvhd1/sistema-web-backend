@@ -24,6 +24,9 @@ export default class Usuario extends BaseModel {
   @column()
   public usuario_principal: string;
 
+  @column()
+  public status: string;
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
 
