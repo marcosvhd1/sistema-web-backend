@@ -60,7 +60,6 @@ Route.group(() => {
     Route.group(() => {
       Route.get('/max', 'TransportadorasController.max');
       Route.get('/', 'TransportadorasController.getAll');
-      Route.get('/comboBox', 'TransportadorasController.getAllComboBox');
       Route.post('/', 'TransportadorasController.create');
       Route.put('/:id', 'TransportadorasController.update');
       Route.delete('/:id', 'TransportadorasController.delete');

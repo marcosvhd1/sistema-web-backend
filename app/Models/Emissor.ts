@@ -14,9 +14,48 @@ export default class Emissore extends BaseModel {
 
   @column()
   public razao: string;
+  
+  @column()
+  public fantasia: string;
 
   @column()
   public cnpjcpf: string;
+
+  @column()
+  public ie: string;
+  
+  @column()
+  public im: string;
+  
+  @column()
+  public endereco: string;
+  
+  @column()
+  public numero: string;
+  
+  @column()
+  public bairro: string;
+  
+  @column()
+  public complemento: string;
+  
+  @column()
+  public cnae: string;
+  
+  @column()
+  public telefone: string;
+  
+  @column()
+  public uf: string;
+  
+  @column()
+  public cidade: string;
+  
+  @column()
+  public cep: string;
+  
+  @column()
+  public regime: string;
 
   @column()
   public cnpjcpf_principal: string;

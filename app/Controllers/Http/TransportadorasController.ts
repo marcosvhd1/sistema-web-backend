@@ -32,17 +32,6 @@ export default class TransportadorasController {
     }
   }
 
-  public async getAllComboBox({ request }: HttpContextContract) {
-    const id_emissor = request.input('id_emissor');
-
-    try {
-      const data = await Database.from('transportadoras').select('*').where('id_emissor', '=', id_emissor).orderBy('id');
-      return data;
-    } catch (error: any) {
-      throw new Exception(error);
-    }
-  }
-
   public async create({ request, response }: HttpContextContract) {
     try {
       await Transportadora.create(request.body());

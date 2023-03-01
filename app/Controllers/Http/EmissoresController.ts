@@ -59,7 +59,20 @@ export default class EmissoresController {
 
       if (data != null) {
         data.razao = body.razao;
+        data.fantasia = body.fantasia;
         data.cnpjcpf = body.cnpjcpf;
+        data.ie = body.ie;
+        data.im = body.im;
+        data.endereco = body.endereco;
+        data.numero = body.numero;
+        data.bairro = body.bairro;
+        data.complemento = body.complemento;
+        data.cnae = body.cnae;
+        data.telefone = body.telefone;
+        data.uf = body.uf;
+        data.cidade = body.cidade;
+        data.cep = body.cep;
+        data.regime = body.regime;
         data.status = body.status;
         await data.save();
       }
