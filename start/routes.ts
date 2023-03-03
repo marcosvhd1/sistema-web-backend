@@ -85,6 +85,11 @@ Route.group(() => {
       Route.delete('/:id', 'EmissorUsuarioController.delete');
     }).prefix('/emissor/usuario');
 
+    Route.group(() => {
+      Route.post('/', 'ConfigsController.save');
+      Route.get('/', 'ConfigsController.getByEmissor');
+    }).prefix('/config');
+
   }).middleware('auth');
 
 }).prefix('/api');
