@@ -73,7 +73,7 @@ Route.group(() => {
     }).prefix('/grupos');
 
     Route.group(() => {
-      Route.get('/:uf', 'CidadesController.getAll');
+      Route.get('/', 'CidadesController.getAll');
       Route.post('/', 'CidadesController.create');
       Route.put('/:id', 'CidadesController.update');
       Route.delete('/:id', 'CidadesController.delete');
