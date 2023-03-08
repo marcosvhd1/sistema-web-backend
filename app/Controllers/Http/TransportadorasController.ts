@@ -48,28 +48,7 @@ export default class TransportadorasController {
       const data = await Transportadora.find(params.id);
 
       if (data != null) {
-        data.id_emissor = body.id_emissor;
-        data.razao = body.razao;
-        data.fantasia = body.fantasia;
-        data.cnpjcpf = body.cnpjcpf;
-        data.ie = body.ie;
-        data.rntrc = body.rntrc;
-        data.logradouro = body.logradouro;
-        data.numero = body.numero;
-        data.bairro = body.bairro;
-        data.cep = body.cep;
-        data.uf = body.uf;
-        data.cidade = body.cidade;
-        data.id_cidade = body.id_cidade;
-        data.complemento = body.complemento;
-        data.anotacoes = body.anotacoes;
-        data.tipo_telefone1 = body.tipo_telefone1;
-        data.tipo_telefone2 = body.tipo_telefone2;
-        data.telefone1 = body.telefone1;
-        data.telefone2 = body.telefone2;
-        data.placa = body.placa;
-        data.uf_placa = body.uf_placa;
-        await data.save();
+        await data.fill(body).save();
       }
     } catch (error: any) {
       throw new Exception(error);

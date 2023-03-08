@@ -48,18 +48,7 @@ export default class ServicosController {
       const data = await Servico.find(params.id);
 
       if (data != null) {
-        data.id_emissor = body.id_emissor;
-        data.nserv = body.nserv;
-        data.descricao = body.descricao;
-        data.un = body.un;
-        data.preco = body.preco;
-        data.anotacoes = body.anotacoes;
-        data.base_iss = body.base_iss;
-        data.aliquota_iss = body.aliquota_iss;
-        data.status = body.status;
-        data.item_lista = body.item_lista;
-        data.ncm = body.ncm;
-        await data.save();
+        await data.fill(body).save();
       }
     } catch (error: any) {
       throw new Exception(error);

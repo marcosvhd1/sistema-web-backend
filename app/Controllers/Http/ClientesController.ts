@@ -46,40 +46,9 @@ export default class ClientesController {
 
     try {
       const data = await Cliente.find(params.id);
-
+      
       if (data != null) {
-        data.id_emissor = body.id_emissor;
-        data.tipo = body.tipo;
-        data.categoria = body.categoria;
-        data.razao = body.razao;
-        data.fantasia = body.fantasia;
-        data.cnpjcpf = body.cnpjcpf;
-        data.rg = body.rg;
-        data.ie = body.ie;
-        data.im = body.im;
-        data.suframa = body.suframa;
-        data.tipo_contribuinte = body.tipo_contribuinte;
-        data.logradouro = body.logradouro;
-        data.numero = body.numero;
-        data.bairro = body.bairro;
-        data.cep = body.cep;
-        data.uf = body.uf;
-        data.cidade = body.cidade;
-        data.id_cidade = body.id_cidade;
-        data.complemento = body.complemento;
-        data.observacao = body.observacao;
-        data.tipo_telefone1 = body.tipo_telefone1;
-        data.tipo_telefone2 = body.tipo_telefone2;
-        data.tipo_telefone3 = body.tipo_telefone3;
-        data.telefone1 = body.telefone1;
-        data.telefone2 = body.telefone2;
-        data.telefone3 = body.telefone3;
-        data.pais = body.pais;
-        data.cod_pais = body.cod_pais;
-        data.email1 = body.email1;
-        data.email2 = body.email2;
-        data.site = body.site;
-        await data.save();
+        await data.fill(body).save();
       }
     } catch (error: any) {
       throw new Exception(error);

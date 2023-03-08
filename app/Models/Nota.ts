@@ -40,6 +40,9 @@ export default class Nota extends BaseModel {
 
   @column()
   public cod_destinatario: string;
+  
+  @column()
+  public nome_destinatario: string;
 
   @column()
   public data_emissao: string;

@@ -33,9 +33,7 @@ export default class EmpresasController {
       const data = await Empresa.find(params.id);
 
       if (data != null) {
-        data.cnpjcpf = body.cnpjcpf;
-
-        await data.save();
+        await data.fill(body).save();
       }
     } catch (error: any) {
       throw new Exception(error);

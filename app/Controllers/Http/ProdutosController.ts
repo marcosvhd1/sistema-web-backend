@@ -71,38 +71,7 @@ export default class ProdutosController {
       const data = await Produto.find(params.id);
 
       if (data != null) {
-        data.id_emissor = body.id_emissor;
-        data.nprod = body.nprod;
-        data.descricao = body.descricao;
-        data.referencia = body.referencia;
-        data.codbarras = body.codbarras;
-        data.marca = body.marca;
-        data.grupo = body.grupo;
-        data.preco = body.preco;
-        data.preco_trib = body.preco_trib;
-        data.un = body.un;
-        data.un_trib = body.un_trib;
-        data.status = body.status;
-        data.anotacoes = body.anotacoes;
-        data.cst_icms = body.cst_icms;
-        data.aliquota_icms = body.aliquota_icms;
-        data.base_icms = body.base_icms;
-        data.cst_ipi = body.cst_ipi;
-        data.aliquota_ipi = body.aliquota_ipi;
-        data.cst_cofins = body.cst_cofins;
-        data.aliquota_cofins = body.aliquota_cofins;
-        data.cst_pis = body.cst_pis;
-        data.aliquota_pis = body.aliquota_pis;
-        data.info_adicional = body.info_adicional;
-        data.ncm = body.ncm;
-        data.cest = body.cest;
-        data.cnpj_produtor = body.cnpj_produtor;
-        data.producao_propria = body.producao_propria;
-        data.cfop = body.cfop;
-        data.origem = body.origem;
-        data.peso_bruto = body.peso_bruto;
-        data.peso_liquido = body.peso_bruto;
-        await data.save();
+        await data.fill(body).save();
       }
     } catch (error: any) {
       throw new Exception(error);

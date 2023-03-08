@@ -34,10 +34,7 @@ export default class GruposController {
       const data = await Grupo.find(params.id);
 
       if (data != null) {
-        data.id_emissor = body.id_emissor;
-        data.descricao = body.descricao;
-        data.tipo = body.tipo;
-        await data.save();
+        await data.fill(body).save();
       }
     } catch (error: any) {
       throw new Exception(error);

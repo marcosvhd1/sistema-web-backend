@@ -33,9 +33,7 @@ export default class CidadesController {
       const data = await Cidade.find(params.id);
 
       if (data != null) {
-        data.nome = body.nome;
-        data.uf = body.uf;
-        await data.save();
+        await data.fill(body).save();
       }
     } catch (error: any) {
       throw new Exception(error);

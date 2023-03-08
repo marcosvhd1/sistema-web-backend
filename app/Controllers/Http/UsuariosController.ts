@@ -48,13 +48,7 @@ export default class UsuariosController {
       const data = await Usuario.find(params.id);
 
       if (data != null) {
-        data.id_empresa = body.id_empresa;
-        data.email = body.email;
-        data.password = body.password;
-        data.tipo_admin = body.tipo_admin;
-        data.usuario_principal = body.usuario_principal;
-        data.status = body.status;
-        await data.save();
+        await data.fill(body).save();
       }
     } catch (error: any) {
       throw new Exception(error);

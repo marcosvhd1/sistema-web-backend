@@ -90,6 +90,13 @@ Route.group(() => {
       Route.get('/', 'ConfigsController.getByEmissor');
     }).prefix('/config');
 
+    Route.group(() => {
+      Route.get('/', 'NotasController.get');
+      Route.post('/', 'NotasController.create');
+      Route.put('/:id', 'NotasController.update');
+      Route.delete('/:id', 'NotasController.delete');
+    }).prefix('/notas');
+
   }).middleware('auth');
 
 }).prefix('/api');
