@@ -24,7 +24,7 @@ export default class ClientesController {
     const id_emissor = request.input('id_emissor');
 
     try {
-      const cliente = await Database.from('clientes').select('*').where(filter, 'ilike', `%${description.toUpperCase()}%`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
+      const cliente = await Database.from('clientes').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
       response.header('qtd', cliente.total);
       return cliente.all();
     } catch (error: any) {

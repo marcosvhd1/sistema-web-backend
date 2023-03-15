@@ -91,11 +91,18 @@ Route.group(() => {
     }).prefix('/config');
 
     Route.group(() => {
-      Route.get('/', 'NotasController.get');
+      Route.get('/', 'NotasController.getAll');
       Route.post('/', 'NotasController.create');
       Route.put('/:id', 'NotasController.update');
       Route.delete('/:id', 'NotasController.delete');
     }).prefix('/notas');
+
+    Route.group(() => {
+      Route.get('/', 'NfPagtosController.get');
+      Route.post('/', 'NfPagtosController.create');
+      Route.put('/:id', 'NfPagtosController.update');
+      Route.delete('/', 'NfPagtosController.delete');
+    }).prefix('/nf_pagto');
 
   }).middleware('auth');
 

@@ -17,7 +17,7 @@ export default class extends BaseSchema {
       table.string('status');
       table.integer('modelo');
       table.string('consumidor_final');
-      table.string('cod_destinatario');
+      table.string('id_destinatario');
       table.string('nome_destinatario');
       table.string('data_emissao');
       table.string('data_saida');
@@ -59,12 +59,13 @@ export default class extends BaseSchema {
       table.integer('total_fcp_st');
       table.string('presenca_comprador');
       table.string('modalidade_frete');
-      table.integer('quantidade_transporte');
-      table.integer('numero_transporte');
+      table.string('id_transportadora');
+      table.string('quantidade_transporte');
+      table.string('numero_transporte');
       table.string('especie_transporte');
       table.string('marca_transporte');
-      table.integer('peso_bruto');
-      table.integer('peso_liquido');
+      table.string('peso_bruto');
+      table.string('peso_liquido');
       table.string('info_adicionais');
       table.string('fonte_valor_aprox_tributos');
       table.string('nfe_referenciada');
@@ -77,7 +78,7 @@ export default class extends BaseSchema {
       table.string('local_despacho');
       table.string('uf_saida');
       table.string('local_saida');
-      table.integer('num_di');
+      table.string('num_di');
       table.string('data_di');
       table.timestamp('created_at', { useTz: true });
       table.timestamp('updated_at', { useTz: true });

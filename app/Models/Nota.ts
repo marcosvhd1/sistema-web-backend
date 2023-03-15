@@ -39,7 +39,7 @@ export default class Nota extends BaseModel {
   public consumidor_final: string;
 
   @column()
-  public cod_destinatario: string;
+  public id_destinatario: string;
   
   @column()
   public nome_destinatario: string;
@@ -165,10 +165,13 @@ export default class Nota extends BaseModel {
   public modalidade_frete: string;
 
   @column()
-  public quantidade_transporte: number;
+  public id_transportadora: string;
 
   @column()
-  public numero_transporte: number;
+  public quantidade_transporte: string;
+
+  @column()
+  public numero_transporte: string;
 
   @column()
   public especie_transporte: string;
@@ -177,10 +180,10 @@ export default class Nota extends BaseModel {
   public marca_transporte: string;
 
   @column()
-  public peso_bruto: number;
+  public peso_bruto: string;
 
   @column()
-  public peso_liquido: number;
+  public peso_liquido: string;
 
   @column()
   public info_adicionais: string;
@@ -219,7 +222,7 @@ export default class Nota extends BaseModel {
   public local_saida: string;
 
   @column()
-  public num_di: number;
+  public num_di: string;
 
   @column()
   public data_di: Date;

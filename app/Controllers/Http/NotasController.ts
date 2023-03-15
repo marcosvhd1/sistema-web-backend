@@ -21,27 +21,26 @@ export default class NotasController {
     }
   }
 
-  public async getFilter({ request, response }: HttpContextContract) {
+  public async getAll({ request, response }: HttpContextContract) {
     const { filter, description } = request.qs();
-    const id_emissor = request.input('id_emissor');
     const page = request.input('page', 1);
     const limit = request.input('limit');
-    //const status = request.input('status');
+    const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Database.from('notas').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).andWhere('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
-      response.header('qtd', data.total);
-      return data.all();      
+      const notas = await Database.from('notas').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
+      response.header('qtd', notas.total);
+      return notas.all();
     } catch (error: any) {
       throw new Exception(error);
     }
   }
 
-  public async create({ request, response }: HttpContextContract) {
+  public async create({ request }: HttpContextContract) {
     try {
       const data = {
         'id_emissor': request.input('id_emissor'),
-        'cod_destinatario': request.input('destinatario.cod'),
+        'id_destinatario': request.input('destinatario.id'),
         'nome_destinatario': request.input('destinatario.razao'),
         'cod': request.input('cod'),
         'serie': request.input('serie'),
@@ -87,6 +86,7 @@ export default class NotasController {
         'total_ipi_devolvido': request.input('total_ipi_devolvido'),
         'presenca_comprador': request.input('presenca_comprador'),
         'modalidade_frete': request.input('modalidade_frete'),
+        'id_transportadora': request.input('transportadora.id'),
         'quantidade_transporte': request.input('quantidade_transporte'),
         'especie_transporte': request.input('especie_transporte'),
         'marca_transporte': request.input('marca_transporte'),
@@ -108,18 +108,18 @@ export default class NotasController {
         'data_di': request.input('data_di'),
       };
       
-      await Nota.create(data);
-      response.status(201);
+      const result = await Nota.create(data);
+
+      return result;
     } catch (error: any) {
       throw new Exception(error);
     }
   }
 
-  public async update({ request, response, params }: HttpContextContract) {
-
+  public async update({ request, params }: HttpContextContract) {
     const body = {
       'id_emissor': request.input('id_emissor'),
-      'cod_destinatario': request.input('destinatario.cod'),
+      'id_destinatario': request.input('destinatario.id'),
       'nome_destinatario': request.input('destinatario.razao'),
       'cod': request.input('cod'),
       'serie': request.input('serie'),
@@ -165,6 +165,7 @@ export default class NotasController {
       'total_ipi_devolvido': request.input('total_ipi_devolvido'),
       'presenca_comprador': request.input('presenca_comprador'),
       'modalidade_frete': request.input('modalidade_frete'),
+      'id_transportadora': request.input('transportadora.id'),
       'quantidade_transporte': request.input('quantidade_transporte'),
       'especie_transporte': request.input('especie_transporte'),
       'marca_transporte': request.input('marca_transporte'),
@@ -187,9 +188,9 @@ export default class NotasController {
     };
 
     try {
-      await Nota.query().where('id', params.id).update(body);
-      response.status(201);
+      const result = await Nota.query().where('id', params.id).update(body);
       
+      return result;
     } catch (error: any) {
       throw new Exception(error);
     }
