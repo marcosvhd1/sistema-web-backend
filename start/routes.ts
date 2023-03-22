@@ -103,6 +103,10 @@ Route.group(() => {
       Route.put('/:id', 'NfPagtosController.update');
       Route.delete('/', 'NfPagtosController.delete');
     }).prefix('/nf_pagto');
+    
+    Route.group(() => {
+      Route.post('/', 'NfProdutosController.create');
+    }).prefix('/nf_produtos');
 
   }).middleware('auth');
 
