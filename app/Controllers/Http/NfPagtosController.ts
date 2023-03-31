@@ -30,18 +30,6 @@ export default class NfPagtosController {
     }
   }
     
-  public async update({ request, response, params }: HttpContextContract) {
-    const body = request.body();
-    
-    try {
-      await NfPagto.query().where('id', params.id).update(body);
-      
-      response.status(201);
-    } catch (error: any) {
-      throw new Exception(error);
-    }
-  }
-    
   public async delete({ response, request }: HttpContextContract) {
     const id_nfe = request.input('id_nfe');
 

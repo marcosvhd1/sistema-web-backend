@@ -43,6 +43,7 @@ Route.group(() => {
     Route.group(() => {
       Route.get('/max', 'ProdutosController.max');
       Route.get('/', 'ProdutosController.getAll');
+      Route.get('/:id', 'ProdutosController.getByID');
       Route.get('/group', 'ProdutosController.getAllByGroup');
       Route.post('/', 'ProdutosController.create');
       Route.put('/:id', 'ProdutosController.update');
@@ -91,6 +92,7 @@ Route.group(() => {
     }).prefix('/config');
 
     Route.group(() => {
+      Route.get('/max', 'NotasController.max');
       Route.get('/', 'NotasController.getAll');
       Route.post('/', 'NotasController.create');
       Route.put('/:id', 'NotasController.update');
@@ -100,12 +102,13 @@ Route.group(() => {
     Route.group(() => {
       Route.get('/', 'NfPagtosController.get');
       Route.post('/', 'NfPagtosController.create');
-      Route.put('/:id', 'NfPagtosController.update');
       Route.delete('/', 'NfPagtosController.delete');
     }).prefix('/nf_pagto');
     
     Route.group(() => {
+      Route.get('/', 'NfProdutosController.get');
       Route.post('/', 'NfProdutosController.create');
+      Route.delete('/', 'NfProdutosController.delete');
     }).prefix('/nf_produtos');
 
   }).middleware('auth');

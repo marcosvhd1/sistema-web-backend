@@ -17,6 +17,15 @@ export default class ProdutosController {
     }
   }
 
+  public async getByID({ params }: HttpContextContract) {
+
+    try {
+      const data = await Database.from('produtos').select('*').where('id', '=', params.id).orderBy('id');
+      return data;
+    } catch (error: any) {
+      throw new Exception(error);
+    }
+  }
   public async getAll({ request, response }: HttpContextContract) {
     const { filter, description } = request.qs();
     const page = request.input('page', 1);

@@ -6,6 +6,17 @@ import Nota from 'App/Models/Nota';
 
 export default class NotasController {
 
+  public async max({ request }: HttpContextContract) {
+    const id_emissor = request.input('id_emissor');
+
+    try {
+      const max = await Database.from('notas').max('cod').where('id_emissor', '=', id_emissor);
+      return max;
+    } catch (error: any) {
+      throw new Exception(error);
+    }
+  }
+
   public async get({ request, response }: HttpContextContract) {
     const id_emissor = request.input('id_emissor');
     const page = request.input('page', 1);

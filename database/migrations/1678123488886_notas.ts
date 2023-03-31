@@ -7,7 +7,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary().unique().notNullable();
       table.integer('id_emissor').unsigned().references('id').inTable('emissores').notNullable();
-      table.integer('cod');
+      table.string('cod');
       table.string('tipo');
       table.integer('serie');
       table.string('natureza_operacao');
