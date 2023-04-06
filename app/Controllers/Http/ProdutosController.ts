@@ -91,7 +91,7 @@ export default class ProdutosController {
     const id_emissor = request.input('id_emissor');
 
     try {
-      await Database.from('produtos').delete().where('id', '=', params.id).where('id_emissor', '=', id_emissor);
+      await Database.from('produtos').delete().where('id', '=', params.id).andWhere('id_emissor', '=', id_emissor);
     } catch (error: any) {
       throw new Exception(error);
     }

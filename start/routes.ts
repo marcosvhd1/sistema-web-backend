@@ -92,6 +92,13 @@ Route.group(() => {
     }).prefix('/config');
 
     Route.group(() => {
+      Route.get('/', 'CfopsController.get');
+      Route.post('/', 'CfopsController.create');
+      Route.put('/:id', 'CfopsController.update');
+      Route.delete('/:id', 'CfopsController.delete');
+    }).prefix('/cfops');
+
+    Route.group(() => {
       Route.get('/max', 'NotasController.max');
       Route.get('/', 'NotasController.getAll');
       Route.post('/', 'NotasController.create');
