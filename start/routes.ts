@@ -118,6 +118,12 @@ Route.group(() => {
       Route.delete('/', 'NfProdutosController.delete');
     }).prefix('/nf_produtos');
 
+    Route.group(() => {
+      Route.get('/', 'NfReferenciadasController.get');
+      Route.post('/', 'NfReferenciadasController.create');
+      Route.delete('/', 'NfReferenciadasController.delete');
+    }).prefix('/nf_referenciada');
+
   }).middleware('auth');
 
 }).prefix('/api');

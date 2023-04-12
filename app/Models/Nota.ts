@@ -192,9 +192,6 @@ export default class Nota extends BaseModel {
   public fonte_valor_aprox_tributos: string;
 
   @column()
-  public nfe_referenciada: string;
-
-  @column()
   public ecf_referenciado: string;
 
   @column()

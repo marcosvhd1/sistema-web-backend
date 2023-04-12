@@ -59,7 +59,7 @@ export default class TransportadorasController {
     const id_emissor = request.input('id_emissor');
 
     try {
-      await Database.from('servicos').delete().where('id', '=', params.id).where('id_emissor', '=', id_emissor);
+      await Database.from('transportadoras').delete().where('id', '=', params.id).where('id_emissor', '=', id_emissor);
     } catch (error: any) {
       throw new Exception(error);
     }

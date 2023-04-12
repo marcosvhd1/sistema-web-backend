@@ -174,6 +174,30 @@ export default class NfProduto extends BaseModel {
   public partilha_icms_valor_icms_uf_ori: number;
 
   @column()
+  public cst_icms: string;
+
+  @column()
+  public cst_ipi: string;
+
+  @column()
+  public cst_cofins: string;
+
+  @column()
+  public cst_pis: string;
+
+  @column()
+  public aliquota_icms: number;
+
+  @column()
+  public aliquota_ipi: number;
+
+  @column()
+  public aliquota_cofins: number;
+
+  @column()
+  public aliquota_pis: number;
+
+  @column()
   public cod_anp: string;
 
   @column()

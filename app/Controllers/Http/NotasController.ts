@@ -106,7 +106,6 @@ export default class NotasController {
         'peso_liquido': request.input('peso_liquido'),
         'info_adicionais': request.input('info_adicionais'),
         'fonte_valor_aprox_tributos': request.input('fonte_valor_aprox_tributos'),
-        'nfe_referenciada': request.input('nfe_referenciada'),
         'ecf_referenciado': request.input('ecf_referenciado'),
         'n_coo': request.input('n_coo'),
         'chave_acesso': request.input('chave_acesso'),
