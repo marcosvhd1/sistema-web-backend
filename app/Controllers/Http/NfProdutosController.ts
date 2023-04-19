@@ -44,6 +44,7 @@ export default class NfProdutosController {
         'mod_det_bc_icms_st': body.mod_det_bc_icms_st,
         'p_margem_vlr_adc_icms_st': body.p_margem_vlr_adc_icms_st,
         'p_reducao_base_icms_st': body.p_reducao_base_icms_st,
+        'base_icms': body.produto.base_icms,
         'base_icms_st': body.base_icms_st,
         'aliquota_icms_st': body.aliquota_icms_st,
         'valor_icms_st': body.valor_icms_st,

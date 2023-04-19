@@ -69,6 +69,9 @@ export default class NfProduto extends BaseModel {
   public p_reducao_base_icms_st: number;
 
   @column()
+  public base_icms: number;
+
+  @column()
   public base_icms_st: number;
 
   @column()

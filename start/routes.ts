@@ -111,6 +111,12 @@ Route.group(() => {
       Route.post('/', 'NfPagtosController.create');
       Route.delete('/', 'NfPagtosController.delete');
     }).prefix('/nf_pagto');
+
+    Route.group(() => {
+      Route.get('/', 'NfDuplicatasController.get');
+      Route.post('/', 'NfDuplicatasController.create');
+      Route.delete('/', 'NfDuplicatasController.delete');
+    }).prefix('/nf_duplicata');
     
     Route.group(() => {
       Route.get('/', 'NfProdutosController.get');

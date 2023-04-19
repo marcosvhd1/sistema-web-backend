@@ -27,6 +27,7 @@ export default class extends BaseSchema {
       table.string('mod_det_bc_icms_st').nullable();
       table.double('p_margem_vlr_adc_icms_st').nullable();
       table.double('p_reducao_base_icms_st').nullable();
+      table.double('base_icms').nullable();
       table.double('base_icms_st').nullable();
       table.double('aliquota_icms_st').nullable();
       table.double('valor_icms_st').nullable();
