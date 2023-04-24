@@ -52,7 +52,7 @@ export default class UsuariosController {
       const data = await Usuario.find(params.id);
 
       if (data != null) {
-        await data.fill(body).save();
+        await Usuario.query().where('id', params.id).update(body);
       }
     } catch (error: any) {
       throw new Exception(error);
