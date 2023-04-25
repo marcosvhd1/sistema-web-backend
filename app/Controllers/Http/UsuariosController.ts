@@ -13,7 +13,7 @@ export default class UsuariosController {
     const limit = request.input('limit');
 
     try {
-      const data = await Database.from('usuarios').join('empresas', 'usuarios.id_empresa', '=', 'empresas.id').select('usuarios.*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).where('cnpjcpf', '=', cnpjcpf).paginate(page, limit);
+      const data = await Database.from('usuarios').join('empresas', 'usuarios.id_empresa', '=', 'empresas.id').select('usuarios.*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).where('cnpjcpf', '=', cnpjcpf).orderBy('id').paginate(page, limit);
       response.header('qtd', data.total);
       return data.all();
     } catch (error: any) {
