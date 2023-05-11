@@ -4,8 +4,6 @@ import Database from '@ioc:Adonis/Lucid/Database';
 
 import Nota from 'App/Models/Nota';
 
-declare const fetch: any;
-
 export default class NotasController {
 
   public async max({ request }: HttpContextContract) {
@@ -23,7 +21,6 @@ export default class NotasController {
     const id_emissor = request.input('id_emissor');
     const page = request.input('page', 1);
     const limit = request.input('limit');
-    //const status = request.input('status');
 
     try {
       const data = await Database.from('notas').select('*').where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
@@ -218,22 +215,4 @@ export default class NotasController {
       throw new Exception(error);
     }
   }
-
-  // public async teste_nfe({ request }: HttpContextContract) {
-  //   const body = { uuidEmissor: request.input('id_emissor') };
-
-  //   try {
-  //     const response = await fetch('http://localhost:80/osmini-backend-php/RecebeEventoStatusServidor.php', {
-  //       method: 'post',
-  //       body: JSON.stringify(body),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     });
-  //     const json = await response.json();
-  //     return json;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 }

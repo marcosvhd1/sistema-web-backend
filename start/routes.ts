@@ -130,6 +130,13 @@ Route.group(() => {
       Route.delete('/', 'NfReferenciadasController.delete');
     }).prefix('/nf_referenciada');
 
+    Route.group(() => {
+      Route.get('/emitir', 'SefazController.emitir');
+      Route.get('/cancelar', 'SefazController.cancelar');
+      Route.get('/inutilizar', 'SefazController.inutilizar');
+      Route.get('/status_servidor', 'SefazController.status_servidor');
+    }).prefix('/sefaz');
+
   }).middleware('auth');
 
 }).prefix('/api');
