@@ -7,6 +7,9 @@ export default class Cidade extends BaseModel {
 
   @column()
   public nome: string;
+  
+  @column()
+  public cod: string;
 
   @column()
   public uf: string;
