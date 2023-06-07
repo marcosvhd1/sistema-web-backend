@@ -14,6 +14,7 @@ export default class extends BaseSchema {
       table.string('un').nullable();
       table.string('cfop').nullable();
       table.string('cest').nullable();
+      table.string('codbarras').nullable();
       table.double('quantidade').notNullable();
       table.double('valor_unitario').notNullable();
       table.double('valor_total').notNullable();

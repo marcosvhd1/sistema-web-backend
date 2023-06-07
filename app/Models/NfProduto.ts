@@ -28,6 +28,9 @@ export default class NfProduto extends BaseModel {
 
   @column()
   public cest: string;
+  
+  @column()
+  public codbarras: string;
 
   @column()
   public quantidade: number;

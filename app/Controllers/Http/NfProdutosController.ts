@@ -31,6 +31,7 @@ export default class NfProdutosController {
         'un': body.produto.un,
         'cfop': body.produto.cfop,
         'cest': body.produto.cest,
+        'codbarras': body.produto.codbarras,
         'quantidade': body.quantidade,
         'valor_unitario': body.valor_unitario,
         'valor_total': body.valor_total,

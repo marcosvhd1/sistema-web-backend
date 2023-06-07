@@ -24,9 +24,6 @@ export default class Nota extends BaseModel {
   public cfop: string;
 
   @column()
-  public forma_emissao: string;
-
-  @column()
   public finalidade: string;
 
   @column()

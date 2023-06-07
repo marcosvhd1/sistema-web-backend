@@ -58,7 +58,6 @@ export default class NotasController {
         'cfop': request.input('cfop'),
         'status': request.input('status'),
         'tipo': request.input('tipo'),
-        'forma_emissao': request.input('forma_emissao'),
         'finalidade': request.input('finalidade'),
         'modelo': request.input('modelo'),
         'consumidor_final': request.input('consumidor_final'),

@@ -12,7 +12,6 @@ export default class extends BaseSchema {
       table.integer('serie');
       table.string('natureza_operacao', 300);
       table.string('cfop');
-      table.string('forma_emissao');
       table.string('finalidade');
       table.string('status');
       table.integer('modelo');
