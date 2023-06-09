@@ -13,6 +13,7 @@ export default class extends BaseSchema {
       table.string('tipo_imp');
       table.string('forma_emi');
       table.string('finalidade');
+      table.string('justif', 5000);
       table.string('id_nfce');
       table.string('token_nfce');
       table.string('serie_padrao');

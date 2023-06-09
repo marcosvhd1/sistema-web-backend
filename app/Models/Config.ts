@@ -1,9 +1,9 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { DateTime } from 'luxon';
+import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm';
 
 export default class Config extends BaseModel {
   @column({ isPrimary: true })
-  public id: number
+  public id: number;
 
   @column()
   public id_emissor: number;
@@ -25,6 +25,9 @@ export default class Config extends BaseModel {
   
   @column()
   public finalidade: string;
+  
+  @column()
+  public justif: string;
 
   @column()
   public id_nfce: string;
@@ -75,8 +78,8 @@ export default class Config extends BaseModel {
   public tls: boolean;
 
   @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
+  public createdAt: DateTime;
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
+  public updatedAt: DateTime;
 }
