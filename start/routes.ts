@@ -89,6 +89,10 @@ Route.group(() => {
     }).prefix('/config');
 
     Route.group(() => {
+      Route.post('/', 'TabelancmsController.save');
+    }).prefix('/tabelancm');
+
+    Route.group(() => {
       Route.get('/', 'CfopsController.get');
       Route.post('/', 'CfopsController.create');
       Route.put('/:id', 'CfopsController.update');
