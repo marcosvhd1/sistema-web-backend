@@ -71,6 +71,7 @@ export default class extends BaseSchema {
       table.string('n_coo');
       table.string('caminho_xml');
       table.string('chave_acesso');
+      table.string('protocolo');
       table.string('uf_embarque');
       table.string('local_embarque');
       table.string('local_despacho');

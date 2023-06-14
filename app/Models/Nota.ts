@@ -201,6 +201,9 @@ export default class Nota extends BaseModel {
   public chave_acesso: string;
 
   @column()
+  public protocolo: string;
+
+  @column()
   public uf_embarque: string;
 
   @column()
