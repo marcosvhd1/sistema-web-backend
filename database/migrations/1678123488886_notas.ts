@@ -69,7 +69,8 @@ export default class extends BaseSchema {
       table.string('fonte_valor_aprox_tributos');
       table.string('ecf_referenciado');
       table.string('n_coo');
-      table.string('caminho_xml');
+      table.string('caminho_xml', 5000);
+      table.string('caminho_pdf', 5000);
       table.string('chave_acesso');
       table.string('protocolo');
       table.string('uf_embarque');

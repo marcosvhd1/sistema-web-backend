@@ -198,6 +198,9 @@ export default class Nota extends BaseModel {
   public caminho_xml: string;
 
   @column()
+  public caminho_pdf: string;
+
+  @column()
   public chave_acesso: string;
 
   @column()
