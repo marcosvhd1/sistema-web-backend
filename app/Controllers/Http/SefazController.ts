@@ -5,6 +5,28 @@ declare const fetch: any;
 
 export default class SefazController {
 
+  public async status_servidor({ request }: HttpContextContract) {
+    const body = { 
+      uuidEmissor: request.input('id_emissor'), 
+    };
+
+    try {
+      const response = await fetch('http://localhost:80/osmini-backend-php/RecebeEventoStatusServidor.php', {
+        method: 'post',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      const json = await response.json();
+
+      return json;
+    } catch (error: any) {
+      throw new Exception(error);
+    }
+  }
+
   public async emitir({ request }: HttpContextContract) {
     const body = {
       uuidNotaFiscal: request.input('id_nfe'),
@@ -77,20 +99,23 @@ export default class SefazController {
     }
   }
 
-  public async status_servidor({ request }: HttpContextContract) {
-    const body = { 
-      uuidEmissor: request.input('id_emissor'), 
+  public async cce({ request }: HttpContextContract) {
+    const body = {
+      correcao: request.input('correcao'),
+      uuidNotaFiscal: request.input('id_nfe'),
+      uuidEmissor: request.input('id_emissor'),
+      numeroSeqEvento: request.input('seq_evento'),
     };
 
     try {
-      const response = await fetch('http://localhost:80/osmini-backend-php/RecebeEventoStatusServidor.php', {
+      const response = await fetch('http://localhost:80/osmini-backend-php/RecebeDadosCCE.php', {
         method: 'post',
         body: JSON.stringify(body),
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      
+
       const json = await response.json();
 
       return json;

@@ -135,6 +135,7 @@ Route.group(() => {
       Route.get('/emitir', 'SefazController.emitir');
       Route.get('/cancelar', 'SefazController.cancelar');
       Route.get('/inutilizar', 'SefazController.inutilizar');
+      Route.get('/cce', 'SefazController.cce');
       Route.get('/status_servidor', 'SefazController.status_servidor');
     }).prefix('/sefaz');
 
