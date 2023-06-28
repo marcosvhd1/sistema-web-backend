@@ -66,6 +66,20 @@ export default class NotasController {
     }
   }
 
+  public async getQtdDigit({ request }: HttpContextContract) {
+    const id_emissor = request.input('id_emissor');
+
+    try {
+      const notas = await Database.from('notas').count('*')
+        .where('status', '=', 'Em digitação')
+        .where('id_emissor', '=', id_emissor);
+
+      return notas;
+    } catch (error: any) {
+      throw new Exception(error);
+    }
+  }
+
   public async create({ request }: HttpContextContract) {
     try {
       const data = {

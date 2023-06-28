@@ -102,6 +102,7 @@ Route.group(() => {
     Route.group(() => {
       Route.get('/max', 'NotasController.max');
       Route.get('/', 'NotasController.getAll');
+      Route.get('/count', 'NotasController.getQtdDigit');
       Route.post('/', 'NotasController.create');
       Route.put('/:id', 'NotasController.update');
       Route.delete('/:id', 'NotasController.delete');
