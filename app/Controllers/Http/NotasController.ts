@@ -36,11 +36,31 @@ export default class NotasController {
     const page = request.input('page', 1);
     const limit = request.input('limit');
     const id_emissor = request.input('id_emissor');
+    const filterStatus = request.input('filter_status');
+    const dataInicial = request.input('data_inicial');
+    const dataFinal = request.input('data_final');
 
     try {
-      const notas = await Database.from('notas').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
-      response.header('qtd', notas.total);
-      return notas.all();
+      if (filterStatus != '') {
+        const notas = await Database.from('notas').select('*')
+          .whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`)
+          .where('status', 'like', filterStatus)
+          .whereBetween('data_emissao', [dataInicial, dataFinal])
+          .where('id_emissor', '=', id_emissor)
+          .orderBy('id')
+          .paginate(page, limit);
+        response.header('qtd', notas.total);
+        return notas.all();
+      } else {
+        const notas = await Database.from('notas').select('*')
+          .whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`)
+          .whereBetween('data_emissao', [dataInicial, dataFinal])
+          .where('id_emissor', '=', id_emissor)
+          .orderBy('id')
+          .paginate(page, limit);
+        response.header('qtd', notas.total);
+        return notas.all();
+      }
     } catch (error: any) {
       throw new Exception(error);
     }
