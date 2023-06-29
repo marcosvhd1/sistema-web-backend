@@ -33,34 +33,32 @@ export default class NotasController {
 
   public async getAll({ request, response }: HttpContextContract) {
     const { filter, description } = request.qs();
-    const page = request.input('page', 1);
     const limit = request.input('limit');
-    const id_emissor = request.input('id_emissor');
-    const filterStatus = request.input('filter_status');
-    const dataInicial = request.input('data_inicial');
+    const page = request.input('page', 1);
     const dataFinal = request.input('data_final');
+    const id_emissor = request.input('id_emissor');
+    const filterDate = request.input('filter_date');
+    const dataInicial = request.input('data_inicial');
+    const filterStatus = request.input('filter_status');
+    
+    const whereStatus = ` and status = '${filterStatus}'`;
+    const whereFilter = ` and ${filter}::TEXT ilike '%${description.toUpperCase()}%'`;
+    const whereDate = ` and ${filterDate} between '${dataInicial}' and '${dataFinal}'`;
 
     try {
-      if (filterStatus != '') {
-        const notas = await Database.from('notas').select('*')
-          .whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`)
-          .where('status', 'like', filterStatus)
-          .whereBetween('data_emissao', [dataInicial, dataFinal])
-          .where('id_emissor', '=', id_emissor)
-          .orderBy('id')
-          .paginate(page, limit);
-        response.header('qtd', notas.total);
-        return notas.all();
-      } else {
-        const notas = await Database.from('notas').select('*')
-          .whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`)
-          .whereBetween('data_emissao', [dataInicial, dataFinal])
-          .where('id_emissor', '=', id_emissor)
-          .orderBy('id')
-          .paginate(page, limit);
-        response.header('qtd', notas.total);
-        return notas.all();
-      }
+      let whereSql = `id_emissor = ${id_emissor}`;
+
+      if (filter != '') whereSql += whereFilter;
+      if (filterDate != '') whereSql += whereDate;
+      if (filterStatus != '') whereSql += whereStatus;
+
+      const notas = await Database.from('notas').select('*')
+        .whereRaw(whereSql)
+        .orderBy('id')
+        .paginate(page, limit);
+      response.header('qtd', notas.total);
+
+      return notas.all();
     } catch (error: any) {
       throw new Exception(error);
     }
