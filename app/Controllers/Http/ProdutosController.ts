@@ -26,39 +26,34 @@ export default class ProdutosController {
       throw new Exception(error);
     }
   }
+
   public async getAll({ request, response }: HttpContextContract) {
-    const { filter, description } = request.qs();
+    const { filter, description, group, marca } = request.qs();
     const page = request.input('page', 1);
     const limit = request.input('limit');
     const id_emissor = request.input('id_emissor');
     const status = request.input('status');
 
-    try {
-      if (status === 'Ativo') {
-        const data = await Database.from('produtos').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).andWhere('id_emissor', '=', id_emissor).andWhere('status', '=', 'Ativo').orderBy('id').paginate(page, limit);
-        response.header('qtd', data.total);
-        return data.all();
-
-      } else {
-        const data = await Database.from('produtos').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).andWhere('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
-        response.header('qtd', data.total);
-        return data.all();
-      }
-    } catch (error: any) {
-      throw new Exception(error);
-    }
-  }
-
-  public async getAllByGroup({ request }: HttpContextContract) {
-    const { filter, description, group } = request.qs();
-    const page = request.input('page', 1);
-    const limit = request.input('limit');
-    const id_emissor = request.input('id_emissor');
-    const status = request.input('status');
+    const whereGroup = ` and grupo = '${group}'`;
+    const whereMarca = ` and marca = '${marca}'`;
+    const whereFilter = ` and ${filter}::TEXT ilike '%${description.toUpperCase()}%'`;
+    const whereStatus = ` and status = '${status}'`;
 
     try {
-      const data = await Database.from('produtos').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).andWhere('grupo', '=', group).andWhere('id_emissor', '=', id_emissor).andWhere('status', '=', status).orderBy('id').paginate(page, limit);
-      return data.all();
+      let whereSql = `id_emissor = ${id_emissor}`;
+
+      if (group != '') whereSql += whereGroup;
+      if (marca != '') whereSql += whereMarca;
+      if (description != '') whereSql += whereFilter;
+      if (status === 'Ativo') whereSql += whereStatus;
+
+      const produtos = await Database.from('produtos').select('*')
+        .whereRaw(whereSql)
+        .orderBy('id')
+        .paginate(page, limit);
+      response.header('qtd', produtos.total);
+
+      return produtos.all();
     } catch (error: any) {
       throw new Exception(error);
     }

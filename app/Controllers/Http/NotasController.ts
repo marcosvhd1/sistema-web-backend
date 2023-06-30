@@ -17,20 +17,6 @@ export default class NotasController {
     }
   }
 
-  public async get({ request, response }: HttpContextContract) {
-    const id_emissor = request.input('id_emissor');
-    const page = request.input('page', 1);
-    const limit = request.input('limit');
-
-    try {
-      const data = await Database.from('notas').select('*').where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
-      response.header('qtd', data.total);
-      return data.all();      
-    } catch (error: any) {
-      throw new Exception(error);
-    }
-  }
-
   public async getAll({ request, response }: HttpContextContract) {
     const { filter, description } = request.qs();
     const limit = request.input('limit');
@@ -48,7 +34,7 @@ export default class NotasController {
     try {
       let whereSql = `id_emissor = ${id_emissor}`;
 
-      if (filter != '') whereSql += whereFilter;
+      if (description != '') whereSql += whereFilter;
       if (filterDate != '') whereSql += whereDate;
       if (filterStatus != '') whereSql += whereStatus;
 

@@ -44,7 +44,6 @@ Route.group(() => {
       Route.get('/max', 'ProdutosController.max');
       Route.get('/', 'ProdutosController.getAll');
       Route.get('/:id', 'ProdutosController.getByID');
-      Route.get('/group', 'ProdutosController.getAllByGroup');
       Route.post('/', 'ProdutosController.create');
       Route.put('/:id', 'ProdutosController.update');
       Route.delete('/:id', 'ProdutosController.delete');
