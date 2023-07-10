@@ -5,6 +5,29 @@ declare const fetch: any;
 
 export default class SefazController {
 
+  public async preview({ request }: HttpContextContract) {
+    const body = {
+      uuidNotaFiscal: request.input('id_nfe'),
+      uuidEmissor: request.input('id_emissor'),
+    };
+
+    try {
+      const response = await fetch('http://localhost:80/osmini-backend-php/RecebeDadosPreview.php', {
+        method: 'post',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const json = await response.json();
+
+      return json;
+    } catch (error: any) {
+      throw new Exception(error);
+    }
+  }
+
   public async status_servidor({ request }: HttpContextContract) {
     const body = { 
       uuidEmissor: request.input('id_emissor'), 

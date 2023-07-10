@@ -133,6 +133,7 @@ Route.group(() => {
 
     Route.group(() => {
       Route.get('/emitir', 'SefazController.emitir');
+      Route.get('/preview', 'SefazController.preview');
       Route.get('/cancelar', 'SefazController.cancelar');
       Route.get('/inutilizar', 'SefazController.inutilizar');
       Route.get('/cce', 'SefazController.cce');
