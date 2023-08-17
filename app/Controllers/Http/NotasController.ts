@@ -232,4 +232,19 @@ export default class NotasController {
       throw new Exception(error);
     }
   }
+
+  public async duplicar({ params }: HttpContextContract) {
+    try {
+      const nota = await Nota.findOrFail(params.id);
+    
+      const novaNota = nota.toJSON();
+      delete novaNota.id;
+      
+      const result = await Nota.create(novaNota);
+
+      return result;
+    } catch (error: any) {
+      throw new Exception(error);
+    }
+  }
 }

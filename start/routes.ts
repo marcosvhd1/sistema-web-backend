@@ -105,6 +105,7 @@ Route.group(() => {
       Route.post('/', 'NotasController.create');
       Route.put('/:id', 'NotasController.update');
       Route.delete('/:id', 'NotasController.delete');
+      Route.get('/:id', 'NotasController.duplicar');
     }).prefix('/notas');
 
     Route.group(() => {
