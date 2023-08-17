@@ -1,6 +1,10 @@
 import { Exception } from '@adonisjs/core/build/standalone';
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import Database from '@ioc:Adonis/Lucid/Database';
+import NfDuplicata from 'App/Models/NfDuplicata';
+import NfPagto from 'App/Models/NfPagto';
+import NfProduto from 'App/Models/NfProduto';
+import NfReferenciada from 'App/Models/NfReferenciada';
 
 import Nota from 'App/Models/Nota';
 
@@ -233,16 +237,75 @@ export default class NotasController {
     }
   }
 
-  public async duplicar({ params }: HttpContextContract) {
+  public async duplicar({ request, params }: HttpContextContract) {
+    const id_emissor = request.input('id_emissor');
+
     try {
       const nota = await Nota.findOrFail(params.id);
-    
       const novaNota = nota.toJSON();
+
+      //Pega o último código
+      const maxCod = await Database.from('notas').max('cod').where('id_emissor', '=', id_emissor);
+      const { max } = maxCod[0];
+
       delete novaNota.id;
+      novaNota.cod = parseInt(max) + 1;
       
+      //Cria a nova nota
       const result = await Nota.create(novaNota);
 
-      return result;
+      //Cria os produtos da nota
+      const produtos = await Database.from('nf_produtos').where('id_nfe', '=', nota.id);
+
+      for (let i = 0; i < produtos.length; i++) {
+        const produto = produtos[i];
+        delete produto.id;
+        delete produto.created_at;
+        delete produto.updated_at;
+        produto.id_nfe = result.id;
+
+        await NfProduto.create(produto);
+      }
+
+      //Cria as formas de pag
+      const formas = await Database.from('nf_pagtos').where('id_nfe', '=', nota.id);
+
+      for (let i = 0; i < formas.length; i++) {
+        const forma = formas[i];
+        delete forma.id;
+        delete forma.created_at;
+        delete forma.updated_at;
+        forma.id_nfe = result.id;
+
+        await NfPagto.create(forma);
+      }
+
+      //Cria as duplicatas
+      const duplicatas = await Database.from('nf_duplicatas').where('id_nfe', '=', nota.id);
+
+      for (let i = 0; i < duplicatas.length; i++) {
+        const duplicata = duplicatas[i];
+        delete duplicata.id;
+        delete duplicata.created_at;
+        delete duplicata.updated_at;
+        duplicata.id_nfe = result.id;
+
+        await NfDuplicata.create(duplicata);
+      }
+
+      //Cria as chaves referenciadas
+      const chaves = await Database.from('nf_referenciadas').where('id_nfe', '=', nota.id);
+
+      for (let i = 0; i < chaves.length; i++) {
+        const chave = chaves[i];
+        delete chave.id;
+        delete chave.created_at;
+        delete chave.updated_at;
+        chave.id_nfe = result.id;
+
+        await NfReferenciada.create(chave);
+      }
+
     } catch (error: any) {
       throw new Exception(error);
     }
