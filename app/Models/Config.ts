@@ -9,10 +9,7 @@ export default class Config extends BaseModel {
   public id_emissor: number;
 
   @column()
-  public n_serie: string;
-  
-  @column()
-  public validade: string;
+  public cert_base64: string;
   
   @column()
   public ambiente: string;
