@@ -249,7 +249,16 @@ export default class NotasController {
       const { max } = maxCod[0];
 
       delete novaNota.id;
+      delete novaNota.caminho_xml;
+      delete novaNota.caminho_pdf;
+      delete novaNota.caminho_pdf_cce;
+      delete novaNota.chave_acesso;
+      delete novaNota.protocolo;
+      delete novaNota.created_at;
+      delete novaNota.updated_at;
+
       novaNota.cod = parseInt(max) + 1;
+      novaNota.status = 'Em digitação';
       
       //Cria a nova nota
       const result = await Nota.create(novaNota);
