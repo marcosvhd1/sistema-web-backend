@@ -10,6 +10,9 @@ export default class Config extends BaseModel {
 
   @column()
   public cert_base64: string;
+
+  @column()
+  public cert_senha: string;
   
   @column()
   public ambiente: string;

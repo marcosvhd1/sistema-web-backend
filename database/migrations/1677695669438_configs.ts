@@ -8,6 +8,7 @@ export default class extends BaseSchema {
       table.increments('id').primary().unique().notNullable();
       table.integer('id_emissor').unsigned().references('id').inTable('emissores').notNullable();
       table.text('cert_base64');
+      table.text('cert_senha');
       table.string('ambiente');
       table.string('tipo_imp');
       table.string('forma_emi');
