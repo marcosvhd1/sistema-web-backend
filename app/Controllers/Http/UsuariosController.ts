@@ -49,10 +49,16 @@ export default class UsuariosController {
     const body = request.body();
 
     try {
-      const data = await Usuario.find(params.id);
+      const user = await Usuario.find(params.id);
 
-      if (data != null) {
-        await Usuario.query().where('id', params.id).update(body);
+      if (user != null) {
+        user.email = body.email;
+        user.password = body.password;
+        user.tipo_admin = body.tipo_admin;
+        user.status = body.status;
+        
+        // await Usuario.query().where('id', params.id).update(body);
+        user.save();
       }
     } catch (error: any) {
       throw new Exception(error);
