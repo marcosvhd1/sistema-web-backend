@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon';
-import { BaseModel, beforeCreate, column } from '@ioc:Adonis/Lucid/Orm';
-import Database from '@ioc:Adonis/Lucid/Database';
+import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm';
 
 export default class Produto extends BaseModel {
   @column({ isPrimary: true })
@@ -104,15 +103,4 @@ export default class Produto extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime;
-
-  @beforeCreate()
-  public static async createNProd(Produto: Produto) {
-    try {
-      const lastNProd = await Database.rawQuery('select max(nprod) from produtos');
-      const { max } = lastNProd['rows'][0];
-      Produto.nprod = max+1;
-    } catch (error) {
-      return false;
-    }
-  }
 }
