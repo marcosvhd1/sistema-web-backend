@@ -12,9 +12,10 @@ export default class NotasController {
 
   public async max({ request }: HttpContextContract) {
     const id_emissor = request.input('id_emissor');
+    const serie = request.input('serie');
 
     try {
-      const max = await Database.from('notas').max('cod').where('id_emissor', '=', id_emissor);
+      const max = await Database.from('notas').max('cod').where('serie', '=', serie).where('id_emissor', '=', id_emissor);
       return max;
     } catch (error: any) {
       throw new Exception(error);
