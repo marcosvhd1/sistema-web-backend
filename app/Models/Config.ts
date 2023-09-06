@@ -39,6 +39,9 @@ export default class Config extends BaseModel {
   public serie_padrao: string;
   
   @column()
+  public serie_padrao_nfce: string;
+  
+  @column()
   public aliq_aprov_icms: string;
   
   @column()

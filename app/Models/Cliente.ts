@@ -31,6 +31,9 @@ export default class Cliente extends BaseModel {
   public rg: string;
 
   @column()
+  public datanasc: string;
+
+  @column()
   public ie: string;
 
   @column()
