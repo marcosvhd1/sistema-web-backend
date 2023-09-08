@@ -159,6 +159,15 @@ export default class Nota extends BaseModel {
   public presenca_comprador: string;
 
   @column()
+  public ind_intermed: string;
+
+  @column()
+  public cnpj_intermed: string;
+
+  @column()
+  public id_intermed: string;
+
+  @column()
   public modalidade_frete: string;
 
   @column()
