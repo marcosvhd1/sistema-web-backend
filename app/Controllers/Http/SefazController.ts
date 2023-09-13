@@ -103,6 +103,7 @@ export default class SefazController {
       justificativa: request.input('justificativa'),
       numeroIni: request.input('numero_inicial'),
       numeroFin: request.input('numero_final'),
+      serie: request.input('serie'),
     };
 
     try {
