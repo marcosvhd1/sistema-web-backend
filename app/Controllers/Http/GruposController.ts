@@ -10,7 +10,7 @@ export default class GruposController {
     const id_emissor = request.input('id_emissor');
 
     try {
-      const data = await Database.from('grupos').select('*').where('id_emissor', '=', id_emissor).orderBy('id');
+      const data = await Database.from('grupos').select('*').where('id_emissor', '=', id_emissor).orderBy('descricao');
 
       return data;
     } catch (error: any) {
