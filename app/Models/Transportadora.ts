@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon';
-import { BaseModel, beforeCreate, column } from '@ioc:Adonis/Lucid/Orm';
-import Database from '@ioc:Adonis/Lucid/Database';
+import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm';
 
 export default class Transportadora extends BaseModel {
   @column({ isPrimary: true })
@@ -77,15 +76,4 @@ export default class Transportadora extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime;
-
-  @beforeCreate()
-  public static async createCod(Transportadora: Transportadora) {
-    try {
-      const lastCod = await Database.rawQuery('select max(cod) from transportadoras');
-      const { max } = lastCod['rows'][0];
-      Transportadora.cod = max+1;
-    } catch (error) {
-      return false;
-    }
-  }
 }

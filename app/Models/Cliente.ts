@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon';
-import { BaseModel, beforeCreate, column } from '@ioc:Adonis/Lucid/Orm';
-import Database from '@ioc:Adonis/Lucid/Database';
+import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm';
 
 export default class Cliente extends BaseModel {
   @column({ isPrimary: true })
@@ -110,15 +109,4 @@ export default class Cliente extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime;
-
-  @beforeCreate()
-  public static async createCod(Cliente: Cliente) {
-    try {
-      const lastCod = await Database.rawQuery(`select max(cod) from clientes where id_emissor = ${Cliente.id_emissor}`);
-      const { max } = lastCod['rows'][0];
-      Cliente.cod = max+1;
-    } catch (error) {
-      return false;
-    }
-  }
 }
