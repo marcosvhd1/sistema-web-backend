@@ -28,7 +28,7 @@ export default class ProdutosController {
   }
 
   public async getAll({ request, response }: HttpContextContract) {
-    const { filter, description, group, marca } = request.qs();
+    const { filter, description, group, marca, orderBy, orderDirection } = request.qs();
     const page = request.input('page', 1);
     const limit = request.input('limit');
     const id_emissor = request.input('id_emissor');
@@ -47,12 +47,13 @@ export default class ProdutosController {
       if (description != '') whereSql += whereFilter;
       if (status === 'Ativo') whereSql += whereStatus;
 
-      const produtos = await Database.from('produtos').select('*')
+      const produtos = await Database.from('produtos')
+        .select('*')
         .whereRaw(whereSql)
-        .orderBy('id')
+        .orderByRaw(`${orderBy} ${orderDirection}`)
         .paginate(page, limit);
-      response.header('qtd', produtos.total);
 
+      response.header('qtd', produtos.total);
       return produtos.all();
     } catch (error: any) {
       throw new Exception(error);

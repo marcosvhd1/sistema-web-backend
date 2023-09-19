@@ -18,13 +18,19 @@ export default class ClientesController {
   }
 
   public async getAll({ request, response }: HttpContextContract) {
-    const { filter, description } = request.qs();
+    const { filter, description, orderBy, orderDirection } = request.qs();
     const page = request.input('page', 1);
     const limit = request.input('limit');
     const id_emissor = request.input('id_emissor');
 
     try {
-      const cliente = await Database.from('clientes').select('*').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).where('id_emissor', '=', id_emissor).orderBy('id').paginate(page, limit);
+      const cliente = await Database.from('clientes')
+      .select('*')
+      .whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`)
+      .where('id_emissor', '=', id_emissor)
+      .orderByRaw(`${orderBy} ${orderDirection}`)
+      .paginate(page, limit);
+
       response.header('qtd', cliente.total);
       return cliente.all();
     } catch (error: any) {

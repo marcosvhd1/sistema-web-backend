@@ -21,22 +21,29 @@ export default class EmissoresController {
   }
 
   public async getAllByEmp({ request, response }: HttpContextContract) {
-    const { filter, description } = request.qs();
+    const { filter, description, orderBy, orderDirection } = request.qs();
     const page = request.input('page', 1);
     const limit = request.input('limit');
     const status = request.input('status');
     const idEmpresa = request.input('empresa');
 
+    const whereStatus = ` and status = '${status}'`;
+    const whereFilter = ` and ${filter}::TEXT ilike '%${description.toUpperCase()}%'`;
+    
     try {
-      if (status === 'Ativo') {
-        const data = await Database.from('emissores').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).where('id_empresa', '=', idEmpresa).andWhere('status', '=', 'Ativo').orderBy('id').paginate(page, limit);
-        response.header('qtd', data.total);
-        return data.all();
-      } else {
-        const data = await Database.from('emissores').whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`).where('id_empresa', '=', idEmpresa).orderBy('id').paginate(page, limit);
-        response.header('qtd', data.total);
-        return data.all();
-      }
+      let whereSql = `id_empresa = ${idEmpresa}`;
+
+      if (description != '') whereSql += whereFilter;
+      if (status === 'Ativo') whereSql += whereStatus;
+
+      const data = await Database.from('emissores')
+        .select('*')
+        .whereRaw(whereSql)
+        .orderByRaw(`${orderBy} ${orderDirection}`)
+        .paginate(page, limit);
+
+      response.header('qtd', data.total);
+      return data.all();
     } catch (error) {
       throw new Exception(error);
     }

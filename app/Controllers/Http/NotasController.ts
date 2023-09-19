@@ -23,7 +23,7 @@ export default class NotasController {
   }
 
   public async getAll({ request, response }: HttpContextContract) {
-    const { filter, description } = request.qs();
+    const { filter, description, orderBy, orderDirection } = request.qs();
     const limit = request.input('limit');
     const page = request.input('page', 1);
     const dataFinal = request.input('data_final');
@@ -45,7 +45,7 @@ export default class NotasController {
 
       const notas = await Database.from('notas').select('*')
         .whereRaw(whereSql)
-        .orderBy('id')
+        .orderByRaw(`${orderBy} ${orderDirection}`)
         .paginate(page, limit);
       response.header('qtd', notas.total);
 
