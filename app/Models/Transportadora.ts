@@ -71,6 +71,9 @@ export default class Transportadora extends BaseModel {
   @column()
   public uf_placa: string;
 
+  @column()
+  public antt: string;
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
 
