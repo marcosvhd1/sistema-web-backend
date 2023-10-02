@@ -141,6 +141,10 @@ Route.group(() => {
       Route.get('/status_servidor', 'SefazController.status_servidor');
     }).prefix('/sefaz');
 
+    Route.group(() => {
+      Route.get('/gerencial', 'RelatoriosController.generate');
+    }).prefix('/relatorios');
+
   }).middleware('auth');
 
 }).prefix('/api');
