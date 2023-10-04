@@ -142,7 +142,7 @@ Route.group(() => {
     }).prefix('/sefaz');
 
     Route.group(() => {
-      Route.get('/gerencial', 'RelatoriosController.generate');
+      Route.get('/', 'RelatoriosController.generate');
     }).prefix('/relatorios');
 
   }).middleware('auth');
