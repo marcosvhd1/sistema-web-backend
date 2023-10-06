@@ -8,6 +8,14 @@ import NfReferenciada from 'App/Models/NfReferenciada';
 
 import Nota from 'App/Models/Nota';
 
+function lpad(inputString: string) {
+  while (inputString.length < 4) {
+    inputString = '0' + inputString;
+  }
+
+  return inputString;
+}
+
 export default class NotasController {
 
   public async max({ request }: HttpContextContract) {
@@ -245,6 +253,7 @@ export default class NotasController {
   }
 
   public async duplicar({ request, params }: HttpContextContract) {
+    const regex = new RegExp(/^\d+$/);
     const id_emissor = request.input('id_emissor');
 
     try {
@@ -264,9 +273,11 @@ export default class NotasController {
       delete novaNota.created_at;
       delete novaNota.updated_at;
 
-      novaNota.cod = parseInt(max) + 1;
       novaNota.status = 'Em digitação';
-      
+
+      if (regex.test(max)) novaNota.cod = lpad((parseInt(max) + 1).toString());
+      else novaNota.cod = '';
+
       //Cria a nova nota
       const result = await Nota.create(novaNota);
 
