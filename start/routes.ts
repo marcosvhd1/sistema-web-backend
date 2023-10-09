@@ -145,6 +145,10 @@ Route.group(() => {
       Route.get('/', 'RelatoriosController.generate');
     }).prefix('/relatorios');
 
+    Route.group(() => {
+      Route.get('/', 'EmailsController.sendEmail');
+    }).prefix('/email');
+
   }).middleware('auth');
 
 }).prefix('/api');
