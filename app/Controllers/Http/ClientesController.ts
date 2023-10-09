@@ -25,11 +25,11 @@ export default class ClientesController {
 
     try {
       const cliente = await Database.from('clientes')
-      .select('*')
-      .whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`)
-      .where('id_emissor', '=', id_emissor)
-      .orderByRaw(`${orderBy} ${orderDirection}`)
-      .paginate(page, limit);
+        .select('*')
+        .whereRaw(`${filter}::TEXT ilike '%${description.toUpperCase()}%'`)
+        .where('id_emissor', '=', id_emissor)
+        .orderByRaw(`${orderBy} ${orderDirection}`)
+        .paginate(page, limit);
 
       response.header('qtd', cliente.total);
       return cliente.all();
