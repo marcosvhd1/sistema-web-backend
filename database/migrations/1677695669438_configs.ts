@@ -17,6 +17,7 @@ export default class extends BaseSchema {
       table.string('id_nfce');
       table.string('token_nfce');
       table.string('serie_padrao');
+      table.string('serie_padrao_nfce');
       table.string('aliq_aprov_icms');
       table.string('email_remetente');
       table.string('email');
@@ -28,8 +29,6 @@ export default class extends BaseSchema {
       table.string('assunto');
       table.string('mensagem');
       table.boolean('autenticacao');
-      table.boolean('ssl');
-      table.boolean('tls');
       table.timestamp('created_at', { useTz: true });
       table.timestamp('updated_at', { useTz: true });
     });

@@ -4,13 +4,25 @@ import Config from 'App/Models/Config';
 import nodemailer from 'nodemailer';
 
 export default class EmailsController {
-  public async sendEmail({ request, response }: HttpContextContract) {
+  public async sendEmail({ request, response  }: HttpContextContract) {
     const id_emissor = request.input('id_emissor');
     const destinatario = request.input('destinatario');
-    const destinatario_cc = request.input('destinatario_cc');
-    const destinatario_cco = request.input('destinatario_cco');
     const assunto = request.input('assunto');
     const mensagem = request.input('mensagem');
+
+    const { destinatario_cc } = request.body();
+    const { destinatario_cco } = request.body();
+
+    const copiaCC: string[] = [];
+    const copiaCCO: string[] = [];
+
+    destinatario_cc.forEach((email: string) => {
+      copiaCC.push(email['email']);
+    });
+
+    destinatario_cco.forEach((email: string) => {
+      copiaCCO.push(email['email']);
+    });
     
     try {
       const remetente = await Config.findByOrFail('id_emissor', id_emissor);
@@ -28,12 +40,14 @@ export default class EmailsController {
       const mailOptions = {
         from: `${remetente.email_remetente} <${remetente.email}>`,
         to: destinatario,
-        cc: destinatario_cc,
-        bcc: destinatario_cco,
+        cc: copiaCC,
+        bcc: copiaCCO,
         subject: assunto,
         html: mensagem,
         attachments: [],
       };
+
+      console.log(mailOptions);
 
       const data = await transporter.sendMail(mailOptions);
       response.status(201);

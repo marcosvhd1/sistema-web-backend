@@ -146,7 +146,7 @@ Route.group(() => {
     }).prefix('/relatorios');
 
     Route.group(() => {
-      Route.get('/', 'EmailsController.sendEmail');
+      Route.post('/', 'EmailsController.sendEmail');
     }).prefix('/email');
 
   }).middleware('auth');
