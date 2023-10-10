@@ -81,6 +81,9 @@ export default class extends BaseSchema {
       table.string('local_saida');
       table.string('num_di');
       table.string('data_di');
+      table.string('ind_intermed');
+      table.string('cnpj_intermed');
+      table.string('id_intermed');
       table.timestamp('created_at', { useTz: true });
       table.timestamp('updated_at', { useTz: true });
     });

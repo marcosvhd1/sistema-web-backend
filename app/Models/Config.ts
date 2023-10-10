@@ -73,12 +73,6 @@ export default class Config extends BaseModel {
 
   @column()
   public autenticacao: boolean;
-  
-  @column()
-  public ssl: boolean;
-  
-  @column()
-  public tls: boolean;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;

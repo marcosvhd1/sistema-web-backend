@@ -7,13 +7,14 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary().unique().notNullable();
       table.integer('id_emissor').unsigned().references('id').inTable('emissores').notNullable();
-      table.integer('cod').notNullable();
+      table.string('cod');
       table.string('tipo');
       table.string('categoria');
       table.string('razao');
       table.string('fantasia');
       table.string('cnpjcpf');
       table.string('rg');
+      table.string('datanasc');
       table.string('ie');
       table.string('im');
       table.string('suframa');
