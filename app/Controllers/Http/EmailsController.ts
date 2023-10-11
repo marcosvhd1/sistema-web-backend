@@ -47,8 +47,6 @@ export default class EmailsController {
         attachments: [],
       };
 
-      console.log(mailOptions);
-
       const data = await transporter.sendMail(mailOptions);
       response.status(201);
       
