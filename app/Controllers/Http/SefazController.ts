@@ -9,6 +9,7 @@ export default class SefazController {
     const body = {
       uuidNotaFiscal: request.input('id_nfe'),
       uuidEmissor: request.input('id_emissor'),
+      modelNF: request.input('model'),
     };
 
     try {
