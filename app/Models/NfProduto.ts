@@ -204,6 +204,9 @@ export default class NfProduto extends BaseModel {
   public aliquota_pis: number;
 
   @column()
+  public origem: string;
+
+  @column()
   public cod_anp: string;
 
   @column()

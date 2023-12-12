@@ -89,6 +89,7 @@ export default class NfProdutosController {
         'aliquota_ipi': body.produto.aliquota_ipi,
         'aliquota_cofins': body.produto.aliquota_cofins,
         'aliquota_pis': body.produto.aliquota_pis,
+        'origem': body.origem,
         'cod_anp': body.cod_anp,
         'descricao_anp': body.descricao_anp,
         'uf_consumo': body.uf_consumo,

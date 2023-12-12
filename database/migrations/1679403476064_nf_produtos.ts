@@ -72,6 +72,7 @@ export default class extends BaseSchema {
       table.double('aliquota_ipi');
       table.double('aliquota_cofins');
       table.double('aliquota_pis');
+      table.string('origem');
       table.string('cod_anp').nullable();
       table.string('descricao_anp').nullable();
       table.string('uf_consumo').nullable();
