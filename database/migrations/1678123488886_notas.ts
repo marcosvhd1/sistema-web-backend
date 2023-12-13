@@ -81,6 +81,10 @@ export default class extends BaseSchema {
       table.string('local_saida');
       table.string('num_di');
       table.string('data_di');
+      table.string('transporte');
+      table.string('uf_desembaraco');
+      table.string('local_desembaraco');
+      table.string('data_desembaraco');
       table.string('ind_intermed');
       table.string('cnpj_intermed');
       table.string('id_intermed');

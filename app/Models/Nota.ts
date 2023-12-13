@@ -239,6 +239,18 @@ export default class Nota extends BaseModel {
   @column()
   public data_di: Date;
 
+  @column()
+  public transporte: string;
+
+  @column()
+  public uf_desembaraco: string;
+
+  @column()
+  public local_desembaraco: string;
+  
+  @column()
+  public data_desembaraco: Date;
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
 
