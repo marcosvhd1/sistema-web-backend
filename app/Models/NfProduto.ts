@@ -207,13 +207,34 @@ export default class NfProduto extends BaseModel {
   public origem: string;
 
   @column()
-  public cod_anp: string;
+  public cod_anp_comb: string;
 
   @column()
-  public descricao_anp: string;
+  public descricao_anp_comb: string;
 
   @column()
-  public uf_consumo: string;
+  public uf_consumo_comb: string;
+
+  @column()
+  public codif_comb: string;
+
+  @column()
+  public n_adicao_imp: string;
+
+  @column()
+  public seq_item_imp: string;
+
+  @column()
+  public fabricante_imp: string;
+
+  @column()
+  public registro_exp: string;
+
+  @column()
+  public chave_exp: string;
+
+  @column()
+  public qtde_exp: string;
   
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;

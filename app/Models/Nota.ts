@@ -37,7 +37,7 @@ export default class Nota extends BaseModel {
 
   @column()
   public id_destinatario: string;
-  
+
   @column()
   public nome_destinatario: string;
 
@@ -247,9 +247,12 @@ export default class Nota extends BaseModel {
 
   @column()
   public local_desembaraco: string;
-  
+
   @column()
   public data_desembaraco: Date;
+
+  @column()
+  public tp_intermed: string;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;

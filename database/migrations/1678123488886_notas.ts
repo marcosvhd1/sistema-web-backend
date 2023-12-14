@@ -88,6 +88,7 @@ export default class extends BaseSchema {
       table.string('ind_intermed');
       table.string('cnpj_intermed');
       table.string('id_intermed');
+      table.string('tp_intermed');
       table.timestamp('created_at', { useTz: true });
       table.timestamp('updated_at', { useTz: true });
     });
